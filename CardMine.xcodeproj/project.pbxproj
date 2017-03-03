@@ -157,6 +157,7 @@
 				B8A8771D1E6A214A00FC0FE4 /* UrlValidator.swift */,
 				B8A877101E6A1D9B00FC0FE4 /* ViewControllerExtension.swift */,
 				B8A877111E6A1D9B00FC0FE4 /* Reachability.swift */,
+				B844945B1E62E4290095E426 /* LaunchScreen.storyboard */,
 				B8CC29D21E697833003350D3 /* Assets.xcassets */,
 				B844945E1E62E4290095E426 /* Info.plist */,
 			);
@@ -174,7 +175,6 @@
 		B84494821E62E4560095E426 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B844945B1E62E4290095E426 /* LaunchScreen.storyboard */,
 				B84494561E62E4290095E426 /* Main.storyboard */,
 			);
 			name = Views;

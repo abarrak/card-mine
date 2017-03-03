@@ -20,16 +20,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.navigationController?.isNavigationBarHidden = true
-        subscribeToKeyboardNotifications()
+        customizeForLoginScreen(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        self.navigationController?.isNavigationBarHidden = false
-        unsubscribeFromKeyboardNotifications()
+        customizeForLoginScreen(false)
     }
 
     // Mark: - Actions & Protocols
@@ -48,7 +44,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     // Mark: - Methods
-
+    
+    private func customizeForLoginScreen(_ customized: Bool) {
+        self.navigationController?.isNavigationBarHidden = customized
+        customized ? subscribeToKeyboardNotifications() : unsubscribeFromKeyboardNotifications()
+    }
+    
     private func setUIEnabled(_ enabled: Bool) {
         loginButton.isEnabled = enabled
 
@@ -60,11 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    private func isUserCredentialBlank() -> Bool {
-        return (emailText.text?.isBlank())! || (passwordText.text?.isBlank())! ? true : false
-    }
-    
-    // Mark: Resolve Keyboard/UI issue
+    // Mark: - Resolve Keyboard/UI issue
     
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -88,9 +85,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func keyboardWillShow(_ notification: Notification) {
-        // TODO: Use scrollView, or other more robust mechanism.
-        // Helpful -> http://stackoverflow.com/q/28813339
-        if passwordText.isEditing {
+        if emailText.isEditing && isDeviceLandscape() {
+            view.frame.origin.y = -getKeyboardHeight(notification)
+        } else if passwordText.isEditing {
             view.frame.origin.y = -getKeyboardHeight(notification)
         }        
     }
@@ -103,5 +100,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let userInfo = notification.userInfo!
         let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.cgRectValue.height
+    }
+
+    // Mark: - Helpers
+    
+    private func isUserCredentialBlank() -> Bool {
+        return (emailText.text?.isBlank())! || (passwordText.text?.isBlank())! ? true : false
+    }
+    
+    private func isDeviceLandscape() -> Bool {
+        return UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft ||
+            UIDevice.current.orientation == UIDeviceOrientation.landscapeRight
     }
 }
