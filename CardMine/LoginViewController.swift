@@ -36,13 +36,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginPressed(_ sender: UIButton) {
-        if isUserCredentialBlank() {
+        if areUserCredentialsBlank() {
             return
         }
         
         setUIEnabled(false)
     }
 
+    @IBAction func presentRegistrationScreen(_ sender: UIButton) {
+        performSegue(withIdentifier: "showRegistration", sender: self)
+    }
+    
     // Mark: - Methods
     
     private func customizeForLoginScreen(_ customized: Bool) {
@@ -64,31 +68,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // Mark: - Resolve Keyboard/UI issue
     
     func subscribeToKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(LoginViewController.keyboardWillShow(_:)),
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)),
                                                name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(LoginViewController.keyboardWillHide(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillHide,
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.UIKeyboardWillShow,
-                                                  object: nil)
-        
-        NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.UIKeyboardWillHide,
-                                                  object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func keyboardWillShow(_ notification: Notification) {
         if emailText.isEditing && isDeviceLandscape() {
-            view.frame.origin.y = -getKeyboardHeight(notification)
+            view.frame.origin.y = -super.getKeyboardHeight(notification)
         } else if passwordText.isEditing {
-            view.frame.origin.y = -getKeyboardHeight(notification)
+            view.frame.origin.y = -super.getKeyboardHeight(notification)
         }        
     }
     
@@ -96,15 +91,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.frame.origin.y = 0
     }
     
-    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
-        let userInfo = notification.userInfo!
-        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.cgRectValue.height
-    }
-
     // Mark: - Helpers
     
-    private func isUserCredentialBlank() -> Bool {
+    private func areUserCredentialsBlank() -> Bool {
         return (emailText.text?.isBlank())! || (passwordText.text?.isBlank())! ? true : false
     }
     

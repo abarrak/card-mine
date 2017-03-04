@@ -51,4 +51,10 @@ extension UIViewController {
     func saveInStore() {
         (UIApplication.shared.delegate as! AppDelegate).stack.save()
     }
+    
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = notification.userInfo!
+        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.cgRectValue.height
+    }
 }
