@@ -47,6 +47,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "showRegistration", sender: self)
     }
     
+    @IBAction func presentAboutPage(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showAbout", sender: self)
+    }
+
+    @IBAction func presentContactPage(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showContact", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAbout" {
+            let staticContentVC = segue.destination as! StaticContentViewController
+            staticContentVC.requestedPage = StaticContentViewController.StaticPage.about
+        }
+        
+        if segue.identifier == "showContact" {
+            let staticContentVC = segue.destination as! StaticContentViewController
+            staticContentVC.requestedPage = StaticContentViewController.StaticPage.contact
+        }
+    }
+    
     // Mark: - Methods
     
     private func customizeForLoginScreen(_ customized: Bool) {
