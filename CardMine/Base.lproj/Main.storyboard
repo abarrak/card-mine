@@ -53,21 +53,18 @@
                                             <constraint firstAttribute="height" constant="120" id="vVm-9h-xLC"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="K8I-9u-PXn">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="K8I-9u-PXn">
                                         <rect key="frame" x="0.0" y="120" width="375" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Page Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYV-dK-Vmp">
-                                                <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="30"/>
                                                 <color key="backgroundColor" red="0.95128205129999999" green="0.0" blue="0.017809628500000001" alpha="0.042591594830000003" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="150" id="idL-T1-LSS"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="23"/>
                                                 <color key="textColor" red="0.47058823529999999" green="0.039215686270000001" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Seperator" translatesAutoresizingMaskIntoConstraints="NO" id="BcQ-U5-4Iq">
-                                                <rect key="frame" x="150" y="0.0" width="225" height="30"/>
+                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="30"/>
                                                 <color key="backgroundColor" red="0.95128205129999999" green="0.0" blue="0.017809628501275633" alpha="0.042591594827586204" colorSpace="calibratedRGB"/>
                                             </imageView>
                                         </subviews>
@@ -82,11 +79,11 @@
                                     <constraint firstAttribute="bottom" secondItem="K8I-9u-PXn" secondAttribute="bottom" id="co1-C1-jUx"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XR8-m7-a2U">
-                                <rect key="frame" x="10" y="200" width="355" height="467"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XR8-m7-a2U">
+                                <rect key="frame" x="10" y="190" width="355" height="477"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="eYs-5e-8Uo">
-                                        <rect key="frame" x="5" y="0.0" width="345" height="29"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="eYs-5e-8Uo">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="25"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hut-by-cTn">
                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -100,11 +97,11 @@
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sgk-WQ-yLf">
-                                                <rect key="frame" x="145" y="0.0" width="200" height="29"/>
+                                                <rect key="frame" x="155" y="0.0" width="200" height="25"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Font Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgU-xI-Dr8">
-                                                        <rect key="frame" x="0.0" y="0.0" width="94" height="29"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="94" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="16"/>
                                                         <color key="textColor" red="0.5" green="0.0" blue="0.01403903598" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -116,25 +113,25 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cr7-lz-HPA">
-                                        <rect key="frame" x="0.0" y="39" width="355" height="428"/>
-                                        <color key="backgroundColor" red="1" green="0.94151111577181212" blue="0.93003594229999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <color key="textColor" red="0.29805473993288589" green="0.039215686270000001" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jw3-tp-niy">
+                                        <rect key="frame" x="0.0" y="35" width="355" height="442"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cr7-lz-HPA">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="442"/>
+                                                <color key="backgroundColor" red="1" green="0.94151111577181212" blue="0.93003594229999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                <color key="textColor" red="0.29805473993288589" green="0.039215686270000001" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="eYs-5e-8Uo" firstAttribute="leading" secondItem="XR8-m7-a2U" secondAttribute="leading" constant="5" id="VtW-Wy-mFr"/>
-                                    <constraint firstItem="cr7-lz-HPA" firstAttribute="leading" secondItem="XR8-m7-a2U" secondAttribute="leading" id="ZGi-8h-IEA"/>
-                                    <constraint firstAttribute="trailing" secondItem="eYs-5e-8Uo" secondAttribute="trailing" constant="5" id="xZz-B7-WJd"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.94384806769999996" blue="0.93003594229999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="XR8-m7-a2U" firstAttribute="top" secondItem="OQH-pc-GZ9" secondAttribute="bottom" constant="30" id="4Ld-xy-O8Q"/>
+                            <constraint firstItem="XR8-m7-a2U" firstAttribute="top" secondItem="OQH-pc-GZ9" secondAttribute="bottom" constant="20" id="4Ld-xy-O8Q"/>
                             <constraint firstItem="OQH-pc-GZ9" firstAttribute="top" secondItem="pCR-cv-urE" secondAttribute="bottom" id="6N7-Hm-CTR"/>
                             <constraint firstItem="KCo-zU-zO6" firstAttribute="top" secondItem="XR8-m7-a2U" secondAttribute="bottom" id="6Nf-eJ-2to"/>
                             <constraint firstAttribute="trailing" secondItem="OQH-pc-GZ9" secondAttribute="trailing" id="Jcz-EH-kmS"/>

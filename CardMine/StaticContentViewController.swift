@@ -9,8 +9,8 @@
 import UIKit
 
 class StaticContentViewController: UIViewController {
-    
     // Mark: - Properties
+    
     enum StaticPage {
         case about
         case contact
@@ -48,7 +48,6 @@ class StaticContentViewController: UIViewController {
     private func setupPage(_ name: String) {
         pageTitle.text = name
         pagePhoto.image = UIImage(named: "\(name) Photography")
-        pageContent.text = ""
     }
     
     // Mark: - Resolve Keyboard/UI issue
