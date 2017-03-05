@@ -34,6 +34,10 @@ class StaticContentViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        pageContent.font = pageContent.font?.withSize(CGFloat(sender.value))
+    }
+    
     // Mark: - Methods
     
     private func turnToPage() {
