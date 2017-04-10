@@ -13,7 +13,7 @@ class AbstractAPI: NSObject {
     // Mark: - Type definitions
     
     // Define a generic completion handler closure for api tasks.
-    typealias handlerType = (_ result: [String:Any]?, _ error: NSError?) -> Void
+    typealias handlerType = (_ auth: UserAuthInfo?, _ payload: [String:Any]?, _ error: NSError?) -> Void
         
 
     // Mark: - Methods
@@ -29,6 +29,6 @@ class AbstractAPI: NSObject {
     
     func notifyDisconnectivity(_ completionHandler: @escaping handlerType) {
         let userInfo = [NSLocalizedDescriptionKey : "No connectivity !"]
-        completionHandler(nil, NSError(domain: "Network Status", code: 2, userInfo: userInfo))
+        completionHandler(nil, nil, NSError(domain: "Network Status", code: 2, userInfo: userInfo))
     }
 }
