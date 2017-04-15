@@ -21,6 +21,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         customizeForLoginScreen(true)
+        passIfLoggedIn()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -74,13 +75,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         customized ? subscribeToKeyboardNotifications() : unsubscribeFromKeyboardNotifications()
     }
     
+    private func passIfLoggedIn() {
+        let appDel = (UIApplication.shared.delegate as! AppDelegate)
+        
+        if let _ = appDel.userAuth {
+            print("exists in del ||")
+            navigateToCards()
+        } else {
+            if let storedLogin = UserAuthInfo.retrieve() {
+                appDel.userAuth = storedLogin
+                print("exists in store ||")
+                navigateToCards()
+            }
+        }
+    }
+    
     private func login() {
         setUIEnabled(false)
         
         let email = emailText.text!, password = passwordText.text!
         
         CardMineClient.shared.login(email: email, password: password) {(success, error, auth) in
-            
             if !success {
                 performAsync { self.alertMessage("Falied", message: error ?? "Unexpected Error") }
             } else {
@@ -89,13 +104,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.navigateToCards()
                 }
             }
-            
             performAsync { self.setUIEnabled(true) }
         }
     }
     
     private func persistAuthUserInfo(userAuth: UserAuthInfo) {
-        
+        let appDel = (UIApplication.shared.delegate as! AppDelegate)
+        appDel.userAuth = userAuth
+        appDel.userAuth?.persist()
     }
     
     private func navigateToCards() {
@@ -124,7 +140,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft ||
             UIDevice.current.orientation == UIDeviceOrientation.landscapeRight
     }
-    
     
     // Mark: - Resolve Keyboard/UI issue
     

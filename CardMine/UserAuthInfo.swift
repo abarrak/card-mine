@@ -40,8 +40,30 @@ struct UserAuthInfo {
     // Mark: - Methods
     
     func persist() {
+        storeSet(key: "accessToken", value: accessToken)
+        storeSet(key: "client", value: client)
+        storeSet(key: "expiry", value: expiry)
+        storeSet(key: "uid", value: uid)
     }
     
-    func retrieve() {
+    static func retrieve() -> UserAuthInfo? {
+        if let _accessToken = storeGet("accessToken") {
+            if let _client = storeGet("client") {
+                if let _expiry = storeGet("expiry") {
+                    if let _uid = storeGet("uid") {
+                        return self.init(accessToken: _accessToken, client: _client, expiry: _expiry, uid: _uid)
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    private static func storeGet(_ key: String) -> String? {
+        return UserDefaults.standard.string(forKey: key)
+    }
+    
+    private func storeSet(key: String, value: String) {
+        UserDefaults.standard.set(value, forKey: key)
     }
 }

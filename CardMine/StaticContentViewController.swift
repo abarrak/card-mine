@@ -53,8 +53,4 @@ class StaticContentViewController: UIViewController {
         pageTitle.text = name
         pagePhoto.image = UIImage(named: "\(name) Photography")
     }
-    
-    // Mark: - Resolve Keyboard/UI issue
-    
-    // Mark: - Helpers
 }

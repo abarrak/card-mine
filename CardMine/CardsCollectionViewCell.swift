@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardsCollectionViewCell: UICollectionViewCell {
+class CardsCollectionViewCell : UICollectionViewCell {
     // Mark: -  Properties
     
     @IBOutlet weak var imageView: UIImageView!
@@ -16,6 +16,7 @@ class CardsCollectionViewCell: UICollectionViewCell {
     // Mark: - Methods
     
     func setPlaceholder() {
+        self.imageView.image = #imageLiteral(resourceName: "Placeholder")
     }
     
     func setImage(_ image: Data) {

@@ -83,7 +83,7 @@ extension CardMineClient {
             
             struct Values {
                 static let ApiAccessToken =
-                "Token token=rKSi7R7gx_lSiDqXxE1udbOO9CNjnpKByWgxdsykAfXTUu3g9coti2na0HfvlzJt"
+                "Token token=6Ja76bUZokx5IpUMPG1tbjvbMSjR4TbBImYj7H7hsb0gW8ZMxhFn5aYFj15kvDRF"
             }
         }
     }

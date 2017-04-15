@@ -189,11 +189,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qbo-eN-Dxe" id="bYt-kw-7aQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oc6-Rb-Ohf">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -214,25 +214,36 @@
         <!--Cards Collection-->
         <scene sceneID="ihS-Ro-Wd5">
             <objects>
-                <collectionViewController title="Cards Collection" id="KWD-dK-UmE" sceneMemberID="viewController">
+                <collectionViewController title="Cards Collection" id="KWD-dK-UmE" customClass="CardsCollectionViewController" customModule="CardMine" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Qg5-2K-rJC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lld-hc-z1k">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="140" height="110"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardsCollectionViewCell" id="yvB-ti-Mzk">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="140" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="140" height="110"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h9b-SD-3MP">
+                                            <rect key="frame" x="0.0" y="0.0" width="140" height="110"/>
+                                        </imageView>
+                                    </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="h9b-SD-3MP" firstAttribute="width" secondItem="yvB-ti-Mzk" secondAttribute="width" id="BFy-gF-Dfn"/>
+                                    <constraint firstItem="h9b-SD-3MP" firstAttribute="centerY" secondItem="yvB-ti-Mzk" secondAttribute="centerY" id="QbH-As-ck4"/>
+                                    <constraint firstItem="h9b-SD-3MP" firstAttribute="height" secondItem="yvB-ti-Mzk" secondAttribute="height" id="Qvx-Un-yff"/>
+                                    <constraint firstItem="h9b-SD-3MP" firstAttribute="centerX" secondItem="yvB-ti-Mzk" secondAttribute="centerX" id="vHe-M6-n1T"/>
+                                </constraints>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -241,15 +252,18 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Gallery" image="GallerySelected" selectedImage="GalleryDeselected" id="nRo-Iz-0DA"/>
+                    <connections>
+                        <outlet property="flowLayout" destination="lld-hc-z1k" id="PGa-sI-o96"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yET-Ur-nPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="-1094"/>
+            <point key="canvasLocation" x="2860" y="-1094.3028485757122"/>
         </scene>
         <!--Card Viewer-->
         <scene sceneID="eK7-hC-0bO">
             <objects>
-                <viewController id="YzD-u7-unG" userLabel="Card Viewer" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cardViewer" id="YzD-u7-unG" userLabel="Card Viewer" customClass="CardViewerViewController" customModule="CardMine" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AK0-XA-hVn"/>
                         <viewControllerLayoutGuide type="bottom" id="1wa-1x-cVq"/>
@@ -311,7 +325,7 @@
         <!--Card Designer-->
         <scene sceneID="wOg-qU-kbK">
             <objects>
-                <viewController id="Z2k-Q7-BIp" userLabel="Card Designer" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cardDesigner" id="Z2k-Q7-BIp" userLabel="Card Designer" customClass="CardDesignerViewController" customModule="CardMine" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HU4-ob-TvJ"/>
                         <viewControllerLayoutGuide type="bottom" id="MNp-IH-Z4q"/>

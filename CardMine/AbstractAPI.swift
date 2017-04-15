@@ -12,7 +12,7 @@ class AbstractAPI: NSObject {
     
     // Mark: - Type definitions
     
-    // Define a generic completion handler closure for api tasks.
+    // Define a generic completion handler closure for api tasks
     typealias handlerType = (_ auth: UserAuthInfo?, _ payload: [String:Any]?, _ error: NSError?) -> Void
         
 
