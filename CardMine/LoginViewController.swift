@@ -79,12 +79,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let appDel = (UIApplication.shared.delegate as! AppDelegate)
         
         if let _ = appDel.userAuth {
-            print("exists in del ||")
             navigateToCards()
         } else {
             if let storedLogin = UserAuthInfo.retrieve() {
                 appDel.userAuth = storedLogin
-                print("exists in store ||")
                 navigateToCards()
             }
         }

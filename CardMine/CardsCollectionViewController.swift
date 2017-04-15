@@ -11,6 +11,8 @@ import UIKit
 class CardsCollectionViewController: UICollectionViewController {
 
     // Mark: - Properties
+    
+    @IBOutlet weak var galleryTabBarItem: UITabBarItem!
 
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
@@ -26,18 +28,28 @@ class CardsCollectionViewController: UICollectionViewController {
     
     private func setupUI() {
         setFlowLayout()
+        colorizeTabBarItem()
     }
     
     private func setFlowLayout() {
         let interSpace: CGFloat = 6.0
         let lineSpace: CGFloat = 7.0
         let dimension = (view.frame.size.width - (2 * interSpace)) / 3.0
-        
+                
         flowLayout.minimumInteritemSpacing = interSpace
         flowLayout.minimumLineSpacing = lineSpace
         flowLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
-
+    
+    private func colorizeTabBarItem() {
+        let selected   = galleryTabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
+        galleryTabBarItem.selectedImage = selected
+        
+        let darkRed = UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+        let attributes = [ NSForegroundColorAttributeName : darkRed ]
+        
+        galleryTabBarItem?.setTitleTextAttributes(attributes , for: .selected)
+    }
     
     // Mark: - Actions & Protocols
 
@@ -53,7 +65,8 @@ class CardsCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardsCollectionViewCell",
-                                                      for: indexPath)
+                                                      for: indexPath) as! CardsCollectionViewCell
+        cell.setPlaceholder()
         return cell
     }
 

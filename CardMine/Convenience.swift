@@ -74,7 +74,7 @@ extension CardMineClient {
             }
             
             let status = payload?[Constants.JSONPayloadKeys.Success] as? Bool
-            auth == nil || status == false ? callback(false, "Authentication Failed") : callback(true, nil)
+            status == false ? callback(false, "Logout Failed") : callback(true, nil)
         }
     }
     
@@ -130,7 +130,11 @@ extension CardMineClient {
         return "{\"\(Constants.JSONPayloadKeys.Email)\": \"\(email)\", \"\(Constants.JSONPayloadKeys.Password)\": \"\(password)\"}"
     }
     
-    private func unpackErrorDictionary(errors: [String:Any?]) {
+    private func registerRequestBody() {
         
+    }
+    
+    private func unpackErrorDictionary(errors: [String:Any?]) -> String? {
+        return nil
     }
 }

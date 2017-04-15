@@ -59,6 +59,13 @@ struct UserAuthInfo {
         return nil
     }
     
+    func reset() {
+        UserDefaults.standard.removeObject(forKey: "accessToken")
+        UserDefaults.standard.removeObject(forKey: "client")
+        UserDefaults.standard.removeObject(forKey: "expiry")
+        UserDefaults.standard.removeObject(forKey: "uid")
+    }
+    
     private static func storeGet(_ key: String) -> String? {
         return UserDefaults.standard.string(forKey: key)
     }

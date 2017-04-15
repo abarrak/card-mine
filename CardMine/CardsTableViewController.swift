@@ -8,8 +8,11 @@
 
 import UIKit
 
-class CardsTableViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CardsTableViewController : UITableViewController {
+    
     // Mark: - Properties
+    
+    @IBOutlet weak var listTabBarItem: UITabBarItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,18 +21,33 @@ class CardsTableViewController : UIViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // tableView.reloadData()
+        setupUI()
     }
+    
+    // Mark: - Methods
+    
+    private func setupUI() {
+        colorizeTabBarItem()
+    }
+    
+    private func colorizeTabBarItem() {
+        let selected   = listTabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
+        listTabBarItem.selectedImage = selected
 
-    // MARK: - Table view data source
+        let darkRed = UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+        let attributes = [ NSForegroundColorAttributeName : darkRed ]
+        
+        listTabBarItem?.setTitleTextAttributes(attributes , for: .selected)
+    }
+    
+    // MARK: - Actions & Protocol
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // return Card.all?.count ?? 0
         return 0
     }
 
-    // MARK: - Table view delegate
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentsInfoCell",
                                                  for: indexPath)
     
@@ -40,7 +58,7 @@ class CardsTableViewController : UIViewController, UITableViewDelegate, UITableV
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: open card in designer or viewer ..
     }
 }

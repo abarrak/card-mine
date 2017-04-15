@@ -46,6 +46,7 @@ class CardsTabBarController: UITabBarController {
                 self.setUIEnabled(true)
                 
                 let appDel = (UIApplication.shared.delegate as! AppDelegate)
+                appDel.userAuth?.reset()
                 appDel.userAuth = nil
                 
                 _ = self.navigationController?.popToRootViewController(animated: true)

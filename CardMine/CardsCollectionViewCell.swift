@@ -9,14 +9,14 @@
 import UIKit
 
 class CardsCollectionViewCell : UICollectionViewCell {
-    // Mark: -  Properties
+    // Mark: - Properties
     
     @IBOutlet weak var imageView: UIImageView!
     
     // Mark: - Methods
     
     func setPlaceholder() {
-        self.imageView.image = #imageLiteral(resourceName: "Placeholder")
+        self.imageView.image = #imageLiteral(resourceName: "ImagePlaceholder")
     }
     
     func setImage(_ image: Data) {

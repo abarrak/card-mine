@@ -179,7 +179,7 @@
         <!--Cards Table-->
         <scene sceneID="OuF-Nu-4d4">
             <objects>
-                <tableViewController title="Cards Table" id="APc-uP-vY3" sceneMemberID="viewController">
+                <tableViewController title="Cards Table" id="APc-uP-vY3" customClass="CardsTableViewController" customModule="CardMine" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hIa-8Z-rUD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -189,11 +189,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qbo-eN-Dxe" id="bYt-kw-7aQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oc6-Rb-Ohf">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -206,6 +206,9 @@
                         <sections/>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="List" image="ListSelected" selectedImage="ListDeslected" id="qNR-gq-usw"/>
+                    <connections>
+                        <outlet property="listTabBarItem" destination="qNR-gq-usw" id="bmU-UJ-eYL"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cvc-Oa-PeU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -218,16 +221,16 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Qg5-2K-rJC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.92584420759999997" blue="0.91047507230000002" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lld-hc-z1k">
                             <size key="itemSize" width="140" height="110"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="150" height="35"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardsCollectionViewCell" id="yvB-ti-Mzk">
-                                <rect key="frame" x="0.0" y="0.0" width="140" height="110"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardsCollectionViewCell" id="yvB-ti-Mzk" customClass="CardsCollectionViewCell" customModule="CardMine" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="35" width="140" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="140" height="110"/>
@@ -244,8 +247,15 @@
                                     <constraint firstItem="h9b-SD-3MP" firstAttribute="height" secondItem="yvB-ti-Mzk" secondAttribute="height" id="Qvx-Un-yff"/>
                                     <constraint firstItem="h9b-SD-3MP" firstAttribute="centerX" secondItem="yvB-ti-Mzk" secondAttribute="centerX" id="vHe-M6-n1T"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="h9b-SD-3MP" id="C77-kB-XbL"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardsCollectionHeader" id="JYw-j9-IvB">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="KWD-dK-UmE" id="jiE-rn-pwI"/>
                             <outlet property="delegate" destination="KWD-dK-UmE" id="AWO-8K-ncU"/>
@@ -254,6 +264,7 @@
                     <tabBarItem key="tabBarItem" title="Gallery" image="GallerySelected" selectedImage="GalleryDeselected" id="nRo-Iz-0DA"/>
                     <connections>
                         <outlet property="flowLayout" destination="lld-hc-z1k" id="PGa-sI-o96"/>
+                        <outlet property="galleryTabBarItem" destination="nRo-Iz-0DA" id="2g6-lN-MGu"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yET-Ur-nPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
