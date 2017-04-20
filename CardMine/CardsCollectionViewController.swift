@@ -22,11 +22,11 @@ class CardsCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         setupUI()
     }
-
     
     // Mark: - Methods
     
     private func setupUI() {
+        automaticallyAdjustsScrollViewInsets = false
         setFlowLayout()
         colorizeTabBarItem()
     }

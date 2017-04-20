@@ -25,7 +25,11 @@ class StaticContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated),
+                                               name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                               object: nil)
         turnToPage()
+        pageContent.centerVertically()
     }
     
     // Mark: - Actions & Protocols
@@ -36,6 +40,7 @@ class StaticContentViewController: UIViewController {
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         pageContent.font = pageContent.font?.withSize(CGFloat(sender.value))
+        pageContent.centerVertically()
     }
     
     // Mark: - Methods
@@ -52,5 +57,9 @@ class StaticContentViewController: UIViewController {
     private func setupPage(_ name: String) {
         pageTitle.text = name
         pagePhoto.image = UIImage(named: "\(name) Photography")
+    }
+
+    func rotated() {
+        pageContent.centerVertically()
     }
 }

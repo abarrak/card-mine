@@ -28,46 +28,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewWillDisappear(animated)
         customizeForLoginScreen(false)
     }
-    
-    // Mark: - Actions & Protocols
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true)
-        return true
-    }
-    
-    @IBAction func loginPressed(_ sender: UIButton) {
-        if areUserCredentialsBlank() {
-            return
-        }
-        
-        login()
-    }
-    
-    @IBAction func presentRegistrationScreen(_ sender: UIButton) {
-        performSegue(withIdentifier: "showRegistration", sender: self)
-    }
-    
-    @IBAction func presentAboutPage(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "showAbout", sender: self)
-    }
-    
-    @IBAction func presentContactPage(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "showContact", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showAbout" {
-            let staticContentVC = segue.destination as! StaticContentViewController
-            staticContentVC.requestedPage = StaticContentViewController.StaticPage.about
-        }
-        
-        if segue.identifier == "showContact" {
-            let staticContentVC = segue.destination as! StaticContentViewController
-            staticContentVC.requestedPage = StaticContentViewController.StaticPage.contact
-        }
-    }
-    
+
     // Mark: - Methods
     
     private func customizeForLoginScreen(_ customized: Bool) {
@@ -128,6 +89,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Mark: - Actions & Protocols
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+    
+    @IBAction func loginPressed(_ sender: UIButton) {
+        if areUserCredentialsBlank() {
+            return
+        }
+        
+        login()
+    }
+    
+    @IBAction func presentRegistrationScreen(_ sender: UIButton) {
+        performSegue(withIdentifier: "showRegistration", sender: self)
+    }
+    
+    @IBAction func presentAboutPage(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showAbout", sender: self)
+    }
+    
+    @IBAction func presentContactPage(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showContact", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAbout" {
+            let staticContentVC = segue.destination as! StaticContentViewController
+            staticContentVC.requestedPage = StaticContentViewController.StaticPage.about
+        }
+        
+        if segue.identifier == "showContact" {
+            let staticContentVC = segue.destination as! StaticContentViewController
+            staticContentVC.requestedPage = StaticContentViewController.StaticPage.contact
+        }
+    }
+
     // Mark: - Helpers
     
     private func areUserCredentialsBlank() -> Bool {

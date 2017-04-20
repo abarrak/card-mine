@@ -20,8 +20,8 @@ extension CardMineClient {
     typealias contentCallback  = (_ success: Bool, _ errorString: String?, _ content: String?) -> Void
     
     
-    // Mark: - High level methods
-    
+    // Mark: - Auth
+
     func login(email: String, password: String, callback: @escaping loginCallback) {
         
         let endpoint = "\(Constants.EndPoints.Auth)/\(Constants.EndPoints.SignIn)"
@@ -84,12 +84,14 @@ extension CardMineClient {
     }
     
     func deleteAccount(callback: @escaping deleteAccountCallback) {
-        
+        // TODO ..
     }
     
     func updateAccount() {
-        
+        // TODO ..
     }
+    
+    // Mark: - Resources
     
     func getAllTemplates() {
     }
