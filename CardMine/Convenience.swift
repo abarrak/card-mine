@@ -31,7 +31,7 @@ extension CardMineClient {
         { (auth, payload, error) in
             
             if error != nil {
-                callback(false, "Login Failed: \(error!.localizedDescription)", nil)
+                callback(false, "Login failed: \(error!.localizedDescription)", nil)
                 return
             }
             
@@ -64,7 +64,7 @@ extension CardMineClient {
         { (auth, payload, error) in
             
             if error != nil {
-                callback(false, "Loguot Failed: \(error!.localizedDescription)")
+                callback(false, "Loguot failed: \(error!.localizedDescription)")
                 return
             }
             
@@ -96,34 +96,38 @@ extension CardMineClient {
     func getAllTemplates() {
     }
     
-    func getAbout() {
-    }
-    
-    func getContact() {
+    func getPage(page: staticPage, callback: @escaping contentCallback) throws {
+        var endpoint = ""
         
-    }
-    
-    private func getStaticContent(page: String, callback: @escaping contentCallback) {
+        switch page {
+            case .about:
+                endpoint = "\(Constants.EndPoints.About)"
+            case .contact:
+                endpoint = "\(Constants.EndPoints.Contact)"
+        }
         
-        let _ = genericApiTaks(apiEndpoint: page, parameters: [:], httpMethod: "GET", jsonBody: nil)
+        let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "GET", jsonBody: nil)
         { (auth, payload, error) in
             
             if error != nil {
-                callback(false, nil, "Loguot Failed: \(error!.localizedDescription)")
+                callback(false, "Fetch data failed: \(error!.localizedDescription)", nil)
                 return
             }
             
             if let errors = payload?[Constants.JSONPayloadKeys.Errors] as? [String:Any?] {
-                callback(false, nil, "Loguot failed. \(errors)")
+                callback(false, "Fetch data failed. \(errors)", nil)
                 return
             }
             
             let status = payload?[Constants.JSONPayloadKeys.Success] as? Bool
             let content = payload?[Constants.JSONPayloadKeys.Content] as? String
-            auth == nil || status == false ?
-                callback(false, "Authentication Failed", nil) : callback(true, nil, content)
+            
+            if status == false || content == nil {
+                callback(false, "Parsing data failed", nil)
+            } else {
+                callback(true, nil, content)
+            }
         }
-        
     }
     
     // Mark: - Helpers

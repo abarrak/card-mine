@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias staticPage = StaticContentViewController.StaticPage
+
 class StaticContentViewController: UIViewController {
     // Mark: - Properties
     
@@ -20,6 +22,7 @@ class StaticContentViewController: UIViewController {
     @IBOutlet weak var pageTitle: UILabel!
     @IBOutlet weak var pagePhoto: UIImageView!
     @IBOutlet weak var pageContent: UITextView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     // Mark: - Life Cycle
     
@@ -30,6 +33,7 @@ class StaticContentViewController: UIViewController {
                                                object: nil)
         turnToPage()
         pageContent.centerVertically()
+        spinner.scale(factor: 1.8)
     }
     
     // Mark: - Actions & Protocols
@@ -57,9 +61,30 @@ class StaticContentViewController: UIViewController {
     private func setupPage(_ name: String) {
         pageTitle.text = name
         pagePhoto.image = UIImage(named: "\(name) Photography")
+        loadContent()
     }
 
     func rotated() {
         pageContent.centerVertically()
+    }
+    
+    private func loadContent() {
+        spin(true)
+        
+        try? CardMineClient.shared.getPage(page: requestedPage!) { (success, erorrString, content) in
+            performAsync {
+                if success {
+                    self.pageContent.text = content
+                    self.pageContent.centerVertically()
+                } else {
+                    self.alertMessage("Exception", message: erorrString!)
+                }
+                self.spin(false)
+            }
+        }
+    }
+    
+    private func spin(_ state: Bool) {
+        spinner.isHidden = !state
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B8025E001EA83363007C2767 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8025DFF1EA83363007C2767 /* UITextViewExtension.swift */; };
+		B814F59B1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B814F59A1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift */; };
 		B817FABB1E74A95D003C512D /* CardsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817FABA1E74A95D003C512D /* CardsTableViewController.swift */; };
 		B817FABD1E74B304003C512D /* CardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817FABC1E74B304003C512D /* CardsCollectionViewCell.swift */; };
 		B836295C1E65FB48007BC20D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B836295B1E65FB48007BC20D /* LoginViewController.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		B8025DFF1EA83363007C2767 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
+		B814F59A1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorViewExtension.swift; sourceTree = "<group>"; };
 		B817FABA1E74A95D003C512D /* CardsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsTableViewController.swift; sourceTree = "<group>"; };
 		B817FABC1E74B304003C512D /* CardsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewCell.swift; sourceTree = "<group>"; };
 		B836295B1E65FB48007BC20D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				B844945B1E62E4290095E426 /* LaunchScreen.storyboard */,
 				B8CC29D21E697833003350D3 /* Assets.xcassets */,
 				B844945E1E62E4290095E426 /* Info.plist */,
+				B814F59A1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				B8A877261E6A223700FC0FE4 /* Convenience.swift in Sources */,
 				B8E5DE4F1E7465BE0088502D /* CardsTabBarController.swift in Sources */,
 				B8FE67CA1E7C2418000009D7 /* Template.swift in Sources */,
+				B814F59B1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift in Sources */,
 				B8025E001EA83363007C2767 /* UITextViewExtension.swift in Sources */,
 				B8A877291E6A22AC00FC0FE4 /* Model.xcdatamodeld in Sources */,
 				B8A8E7521E9C21DD00B8F7B2 /* CardDesignerViewController.swift in Sources */,
