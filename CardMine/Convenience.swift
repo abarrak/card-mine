@@ -96,6 +96,30 @@ extension CardMineClient {
     func getAllTemplates() {
     }
     
+    func getAllCards() {
+    }
+    
+    func createCard() {
+    }
+    
+    func updateCard() {
+    }
+    
+    func getCard() {
+    }
+    
+    func deleteCard() {
+    }
+    
+    func addTextualContentToCard() {
+    }
+    
+    func updateTextualContentOfCard() {
+    }
+
+    func deleteTextualContentFromCard() {
+    }
+    
     func getPage(page: staticPage, callback: @escaping contentCallback) throws {
         var endpoint = ""
         
@@ -125,7 +149,8 @@ extension CardMineClient {
             if status == false || content == nil {
                 callback(false, "Parsing data failed", nil)
             } else {
-                callback(true, nil, content)
+                let _c = content?.replacingOccurrences(of: "\n", with: "\n\n")
+                callback(true, nil, _c)
             }
         }
     }
