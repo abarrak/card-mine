@@ -15,6 +15,7 @@ extension Date {
         formatter.dateFormat = "MMM dd, yyyy h:mm a"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
+        formatter.timeZone = NSTimeZone(name: "UTC") as TimeZone!
         return formatter.string(from: self)
     }
 }

@@ -20,9 +20,10 @@ extension String {
     // Convert a string to a proper formatted date type.
     func toDate() -> Date? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy h:mm a"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
+        formatter.timeZone = NSTimeZone(name: "UTC") as TimeZone!
         return formatter.date(from: self)
     }
 }

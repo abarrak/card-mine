@@ -9,7 +9,6 @@
 import UIKit
 
 class RegistrationViewController: UIViewController {
-
     // Mark: - Properties
 
     // Mark: - Life Cycle

@@ -18,6 +18,7 @@ extension CardMineClient {
     typealias deleteAccountCallback = (_ success: Bool, _ errorString: String?) -> Void
     
     typealias contentCallback  = (_ success: Bool, _ errorString: String?, _ content: String?) -> Void
+    typealias templatesCallback  = (_ success: Bool, _ errorString: String?, _ templates: [Template]?) -> Void
     
     
     // Mark: - Auth
@@ -93,7 +94,27 @@ extension CardMineClient {
     
     // Mark: - Resources
     
-    func getAllTemplates() {
+    func getAllTemplates(callback: @escaping templatesCallback) {
+        let endpoint = "\(Constants.EndPoints.Templates)/"
+        
+        let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "GET", jsonBody: nil) { (auth, payload, error) in
+            
+            if error != nil {
+                callback(false, "Server Erro: \(error!.localizedDescription)", nil)
+                return
+            }
+            
+            if let errors = payload?[Constants.JSONPayloadKeys.Errors] as? [String:Any?] {
+                callback(false, "Load Error. \(errors)", nil)
+                return
+            }
+            
+            if let templates = payload as? [[String : Any]]  {
+                callback(true, nil, Template.buildList(templates))
+            } else {
+                callback(false, "Unable to parse server results !", nil)
+            }
+        }
     }
     
     func getAllCards() {

@@ -19,13 +19,15 @@ class CardMineClient: AbstractAPI {
     // Mark: - Methods
     
     func genericApiTaks(apiEndpoint: String, parameters: [String:AnyObject], httpMethod: String,
-                        jsonBody: String?, callback: @escaping handlerType) {
+                        jsonBody: String?, auth: UserAuthInfo? = nil, callback: @escaping handlerType) {
         
         // Exit properly if no connection available.
         if !isNetworkAvaliable() {
             notifyDisconnectivity(callback)
             return
         }
+        
+        userAuth = auth
         
         // Build the url then the request objects.
         var url = setupAPIURLWith(pathExtension: apiEndpoint, parameters: parameters)
@@ -58,7 +60,9 @@ class CardMineClient: AbstractAPI {
             }
             
             // Extract Auth headers
-            self.parseHeaders(response as! HTTPURLResponse)
+            if self.userAuth == nil {
+                self.parseHeaders(response as! HTTPURLResponse)
+            }
             
             // Extact the raw data and pass it for parsing.
             self.parseJSON(data!, parseJSONCompletionHandler: callback)
@@ -104,8 +108,6 @@ class CardMineClient: AbstractAPI {
         if let body = body {
             req.httpBody = body.data(using: String.Encoding.utf8)
         }
-        
-        
         return req
     }
     
@@ -118,19 +120,17 @@ class CardMineClient: AbstractAPI {
     
     // Convert raw JSON to a Foundation object via provided callback
     private func parseJSON(_ data: Data, parseJSONCompletionHandler: handlerType) {
-        
-        var parsedResult: [String:Any]? = nil
+        var parsedResult: Any? = nil
         
         do {
-            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any]
+            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         } catch {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             parseJSONCompletionHandler(nil, nil, NSError(domain: "parseJSONCompletionHandler",
                                                          code: 1,
                                                          userInfo: userInfo))
         }
-        
-        parseJSONCompletionHandler(userAuth, parsedResult, nil)
+        parseJSONCompletionHandler(self.userAuth, parsedResult as AnyObject?, nil)
     }
     
     

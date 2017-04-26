@@ -13,18 +13,14 @@ class AbstractAPI: NSObject {
     // Mark: - Type definitions
     
     // Define a generic completion handler closure for api tasks
-    typealias handlerType = (_ auth: UserAuthInfo?, _ payload: [String:Any]?, _ error: NSError?) -> Void
+    typealias handlerType = (_ auth: UserAuthInfo?, _ payload: AnyObject?, _ error: NSError?) -> Void
         
 
     // Mark: - Methods
 
     func isNetworkAvaliable() -> Bool {
         let reachability = Reachability()!
-        if reachability.currentReachabilityStatus == .notReachable {
-            return false
-        } else {
-            return true
-        }
+        return reachability.currentReachabilityStatus == .notReachable ? false : true
     }
     
     func notifyDisconnectivity(_ completionHandler: @escaping handlerType) {

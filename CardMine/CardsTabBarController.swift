@@ -60,7 +60,7 @@ class CardsTabBarController: UITabBarController {
     }
     
     func new() {
-        
+        performSegue(withIdentifier: "presentCardDesigner", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -75,7 +75,7 @@ class CardsTabBarController: UITabBarController {
         logoutButton    = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain,
                                           target: self,
                                           action: #selector(logoutPressed))
-        styleLoginText()
+        styleLoginTextAndNavBar()
         
         refershButton   = UIBarButtonItem(image: r, style: UIBarButtonItemStyle.plain,
                                           target: self, action: #selector(refersh))
@@ -88,7 +88,7 @@ class CardsTabBarController: UITabBarController {
         navigationItem.rightBarButtonItems = [refershButton!, newButton!]
     }
     
-    private func styleLoginText() {
+    private func styleLoginTextAndNavBar() {
         let darkRed = UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
         let attributes = [ NSForegroundColorAttributeName : darkRed ]
 
@@ -101,6 +101,9 @@ class CardsTabBarController: UITabBarController {
         logoutButton?.setTitleTextAttributes(attributes , for: .normal)
         logoutButton?.setTitleTextAttributes(attributesMed, for: .focused)
         logoutButton?.setTitleTextAttributes(attributesLight , for: .disabled)
+        
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: darkRed]
+        navigationController?.navigationBar.tintColor = darkRed
     }
     
     private func setUIEnabled(_ enabled: Bool) {

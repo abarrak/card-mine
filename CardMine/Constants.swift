@@ -51,6 +51,9 @@ extension CardMineClient {
             
             
             // Template resource keys
+            static let Name     = "name"
+            static let Image    = "image"
+            static let Url      = "url"
             
             // Card resource keys
             static let Title        = "title"
