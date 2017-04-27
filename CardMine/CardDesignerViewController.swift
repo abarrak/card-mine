@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CoreGraphics
 
 class CardDesignerViewController: UIViewController, UIPopoverPresentationControllerDelegate,
-UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate  {
+UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate  {
     
     // Mark: - Properties
     
@@ -103,7 +104,7 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate  {
     }
     
     @IBAction func insertText(_ sender: UIBarButtonItem) {
-        
+        attachTextField()
     }
 
     func listenToTemplatesArrival() {
@@ -143,19 +144,36 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate  {
         
     }
     
-    private func getBoundingLimitsOfImage() -> [String:Float]? {
+    private func getBoundingLimitsOfImage() -> [String:Int]? {
         if let cardImg = cardImage.image {
-            return ["x": Float(cardImage.frame.minX),
-                    "y": Float(cardImage.frame.minY),
-                    "w": Float(cardImg.size.width),
-                    "h": Float(cardImg.size.height)]
+            return ["x": Int(cardImage.frame.origin.x),
+                    "y": Int(cardImage.frame.origin.y),
+                    "w": Int(cardImg.size.width),
+                    "h": Int(cardImg.size.height)]
         }
         return nil
     }
     
     // Mark: - Helpers
     
-    private func generateTextField(x: Int, y: Int, w: Int, h: Int) {
+    private func attachTextField() {
+        let coords = getBoundingLimitsOfImage()!
+        print(coords)
+        
+        let textField = generateTextField(x: coords["x"]! + 20, y: coords["y"]! + 20, w: 70, h: 30)
+        view.addSubview(textField)
+
+        print(calculateRectOfImageInImageView(imageView: cardImage))
+    }
+    
+    private func destroyTextField() {
+    }
+    
+    private func moveTextField(x: Int, y: Int) {
+        
+    }
+
+    private func generateTextField(x: Int, y: Int, w: Int, h: Int) -> UITextField {
         let textField = UITextField(frame: CGRect(x: x, y: y, width: w, height: h))
         
         textField.placeholder = "Your text here .."
@@ -166,11 +184,50 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate  {
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         textField.isUserInteractionEnabled = true
         textField.textAlignment = NSTextAlignment.center
-    }
-    
-    private func destroyTextField() {
-        
+        return textField
     }
 
+    private func registerGestures(textField: UITextField) {
+        let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                            action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0
+        longPressGesture.allowableMovement = 15
+        longPressGesture.delegate = self
+        
+        textField.addGestureRecognizer(longPressGesture)
+    }
+    
+    func handleLongPress(_ gestureRecognizer: UIGestureRecognizer){
+        if gestureRecognizer.state == UIGestureRecognizerState.ended {
+            let touchPoint = gestureRecognizer.location(in: view)
+            
+            _ = ["x": Int(touchPoint.x), "y": Int(touchPoint.y)]
+        }
+    }
+
+    func calculateRectOfImageInImageView(imageView: UIImageView) -> CGRect {
+        let imageViewSize = imageView.frame.size
+        let imgSize = imageView.image?.size
+        
+        guard let imageSize = imgSize, imgSize != nil else {
+            return CGRect.zero
+        }
+        
+        let scaleWidth = imageViewSize.width / imageSize.width
+        let scaleHeight = imageViewSize.height / imageSize.height
+        let aspect = fmin(scaleWidth, scaleHeight)
+        
+        var imageRect = CGRect(x: 0, y: 0, width: imageSize.width * aspect, height: imageSize.height * aspect)
+        // Center image
+        imageRect.origin.x = (imageViewSize.width - imageRect.size.width) / 2
+        imageRect.origin.y = (imageViewSize.height - imageRect.size.height) / 2
+        
+        // Add imageView offset
+        imageRect.origin.x += imageView.frame.origin.x
+        imageRect.origin.y += imageView.frame.origin.y
+        
+        return imageRect
+    }
+    
     // Mark: - Resolve Keyboard/UI issue
 }

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		B8025E001EA83363007C2767 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8025DFF1EA83363007C2767 /* UITextViewExtension.swift */; };
+		B805515E1EB17941006B5396 /* Card+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B805515A1EB17941006B5396 /* Card+CoreDataClass.swift */; };
+		B805515F1EB17941006B5396 /* Card+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B805515B1EB17941006B5396 /* Card+CoreDataProperties.swift */; };
+		B80551601EB17941006B5396 /* TextualContent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B805515C1EB17941006B5396 /* TextualContent+CoreDataClass.swift */; };
+		B80551611EB17941006B5396 /* TextualContent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B805515D1EB17941006B5396 /* TextualContent+CoreDataProperties.swift */; };
 		B814F59B1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B814F59A1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift */; };
 		B817FABB1E74A95D003C512D /* CardsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817FABA1E74A95D003C512D /* CardsTableViewController.swift */; };
 		B817FABD1E74B304003C512D /* CardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817FABC1E74B304003C512D /* CardsCollectionViewCell.swift */; };
@@ -41,9 +45,7 @@
 		B8CC29D31E697833003350D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8CC29D21E697833003350D3 /* Assets.xcassets */; };
 		B8E5DE4F1E7465BE0088502D /* CardsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E5DE4E1E7465BE0088502D /* CardsTabBarController.swift */; };
 		B8FE67C61E7C23DB000009D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FE67C51E7C23DB000009D7 /* User.swift */; };
-		B8FE67C81E7C23FD000009D7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FE67C71E7C23FD000009D7 /* Card.swift */; };
 		B8FE67CA1E7C2418000009D7 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FE67C91E7C2418000009D7 /* Template.swift */; };
-		B8FE67CC1E7C4AFC000009D7 /* TextualContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FE67CB1E7C4AFC000009D7 /* TextualContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,10 @@
 
 /* Begin PBXFileReference section */
 		B8025DFF1EA83363007C2767 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
+		B805515A1EB17941006B5396 /* Card+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Card+CoreDataClass.swift"; path = "../Card+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B805515B1EB17941006B5396 /* Card+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Card+CoreDataProperties.swift"; path = "../Card+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B805515C1EB17941006B5396 /* TextualContent+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TextualContent+CoreDataClass.swift"; path = "../TextualContent+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B805515D1EB17941006B5396 /* TextualContent+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TextualContent+CoreDataProperties.swift"; path = "../TextualContent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B814F59A1EA98AD200A65284 /* UIActivityIndicatorViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorViewExtension.swift; sourceTree = "<group>"; };
 		B817FABA1E74A95D003C512D /* CardsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsTableViewController.swift; sourceTree = "<group>"; };
 		B817FABC1E74B304003C512D /* CardsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 		B84494741E62E42A0095E426 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B857698C1EA146B3004F3A92 /* CardsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewController.swift; sourceTree = "<group>"; };
 		B87FC2D51EAD680500DB8B2E /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		B8979C4A1EB17A66007FABC9 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		B8A05A701EB0CA54001DE491 /* colorPalette.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		B8A05A721EB0E581001DE491 /* AllTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllTemplates.swift; sourceTree = "<group>"; };
 		B8A8770F1E6A1D9B00FC0FE4 /* AsyncHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncHelpers.swift; sourceTree = "<group>"; };
@@ -104,9 +111,7 @@
 		B8CC29D21E697833003350D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8E5DE4E1E7465BE0088502D /* CardsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsTabBarController.swift; sourceTree = "<group>"; };
 		B8FE67C51E7C23DB000009D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		B8FE67C71E7C23FD000009D7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		B8FE67C91E7C2418000009D7 /* Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
-		B8FE67CB1E7C4AFC000009D7 /* TextualContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextualContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,14 +255,16 @@
 		B8A877171E6A208400FC0FE4 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				B805515A1EB17941006B5396 /* Card+CoreDataClass.swift */,
+				B805515B1EB17941006B5396 /* Card+CoreDataProperties.swift */,
+				B805515C1EB17941006B5396 /* TextualContent+CoreDataClass.swift */,
+				B805515D1EB17941006B5396 /* TextualContent+CoreDataProperties.swift */,
 				B8A877271E6A22AC00FC0FE4 /* Model.xcdatamodeld */,
 				B8A877181E6A209F00FC0FE4 /* CoreDataStack.swift */,
 				B8FE67C51E7C23DB000009D7 /* User.swift */,
 				B8A8772C1E6A6BB800FC0FE4 /* UserAuthInfo.swift */,
 				B8A05A721EB0E581001DE491 /* AllTemplates.swift */,
 				B8FE67C91E7C2418000009D7 /* Template.swift */,
-				B8FE67C71E7C23FD000009D7 /* Card.swift */,
-				B8FE67CB1E7C4AFC000009D7 /* TextualContent.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -415,7 +422,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B817FABD1E74B304003C512D /* CardsCollectionViewCell.swift in Sources */,
-				B8FE67CC1E7C4AFC000009D7 /* TextualContent.swift in Sources */,
 				B8A877191E6A209F00FC0FE4 /* CoreDataStack.swift in Sources */,
 				B8A877131E6A1D9B00FC0FE4 /* ViewControllerExtension.swift in Sources */,
 				B8A877261E6A223700FC0FE4 /* Convenience.swift in Sources */,
@@ -431,20 +437,23 @@
 				B8A877221E6A21FA00FC0FE4 /* Client.swift in Sources */,
 				B8A877201E6A214A00FC0FE4 /* UrlValidator.swift in Sources */,
 				B8A8771F1E6A214A00FC0FE4 /* DateExtension.swift in Sources */,
+				B805515E1EB17941006B5396 /* Card+CoreDataClass.swift in Sources */,
 				B8A8772B1E6A590500FC0FE4 /* RegistrationViewController.swift in Sources */,
 				B857698D1EA146B3004F3A92 /* CardsCollectionViewController.swift in Sources */,
 				B8A8771E1E6A214A00FC0FE4 /* StringExtension.swift in Sources */,
+				B80551601EB17941006B5396 /* TextualContent+CoreDataClass.swift in Sources */,
 				B87FC2D61EAD680500DB8B2E /* ColorPickerViewController.swift in Sources */,
 				B8A877141E6A1D9B00FC0FE4 /* Reachability.swift in Sources */,
 				B8A877161E6A205000FC0FE4 /* AbstractAPI.swift in Sources */,
 				B8A05A731EB0E581001DE491 /* AllTemplates.swift in Sources */,
 				B817FABB1E74A95D003C512D /* CardsTableViewController.swift in Sources */,
+				B80551611EB17941006B5396 /* TextualContent+CoreDataProperties.swift in Sources */,
 				B84494531E62E4290095E426 /* AppDelegate.swift in Sources */,
+				B805515F1EB17941006B5396 /* Card+CoreDataProperties.swift in Sources */,
 				B8A8772F1E6A75E300FC0FE4 /* StaticContentViewController.swift in Sources */,
 				B8A877241E6A221500FC0FE4 /* Constants.swift in Sources */,
 				B8A8E7501E9C21C100B8F7B2 /* CardViewerViewController.swift in Sources */,
 				B8FE67C61E7C23DB000009D7 /* User.swift in Sources */,
-				B8FE67C81E7C23FD000009D7 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,9 +724,10 @@
 		B8A877271E6A22AC00FC0FE4 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B8979C4A1EB17A66007FABC9 /* Model 2.xcdatamodel */,
 				B8A877281E6A22AC00FC0FE4 /* Model.xcdatamodel */,
 			);
-			currentVersion = B8A877281E6A22AC00FC0FE4 /* Model.xcdatamodel */;
+			currentVersion = B8979C4A1EB17A66007FABC9 /* Model 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
