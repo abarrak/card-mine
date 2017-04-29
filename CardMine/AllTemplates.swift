@@ -12,6 +12,9 @@ class AllTemplates {
     // Mark: - Properties
 
     static var templates = [Template]()
+    static var count: Int {
+        get { return AllTemplates.templates.count }
+    }
     static let templatesNotificationId: String = "APITemplatesArrived"
 
     // Mark: - Methods
@@ -26,7 +29,7 @@ class AllTemplates {
             }
         }
     }
-    
+
     class func notifyOnArrival() {
         NotificationCenter.default.post(name: Notification.Name(templatesNotificationId), object: nil)
     }

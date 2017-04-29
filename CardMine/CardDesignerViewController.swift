@@ -16,14 +16,18 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var templatePicker: UIPickerView!
-    @IBOutlet weak var textInsert: UIBarButtonItem!
-    @IBOutlet weak var colorPicker: UIBarButtonItem!
+    @IBOutlet weak var textInsertButton: UIBarButtonItem!
+    @IBOutlet weak var colorButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
     @IBOutlet weak var cardImage: UIImageView!
     @IBOutlet weak var helpButton: UIBarButtonItem!
     
-    var textInsertColor = UIColor.red
+    let insertedTextTag = 995
+    var insertedText: UITextField?
+    var textInsertColor = UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+    
+    var navToImageIndex: Int?
     
     var templates: [Template] {
         get {
@@ -39,7 +43,17 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setInitalCardImage()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        initiateDesigner()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navToImageIndex = nil
     }
     
     // Mark: - Actions & Protocols
@@ -70,9 +84,7 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if let m = templates[row].imgObject {
-            cardImage.image = UIImage(data: m as Data)
-        }
+        setImageAtIndex(row)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -98,9 +110,10 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     }
     
     func setColorCallback (_ color: UIColor) {
-        colorPicker.tintColor = color
+        colorButton.tintColor = color
         textInsertColor = color
-        textInsert.tintColor = color
+        textInsertButton.tintColor = color
+        insertedText?.textColor = color
     }
     
     @IBAction func insertText(_ sender: UIBarButtonItem) {
@@ -108,93 +121,16 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     }
 
     func listenToTemplatesArrival() {
-        self.templatePicker.reloadAllComponents()
         setInitalCardImage()
+        templatePicker.reloadAllComponents()
     }
     
     @IBAction func showHelpPopup() {
-        let helpText = "* Use insert icon to create texts. \n" +
+        let helpText = "* Use insert icon to create text. \n" +
                        "* Move it around by touch and drag. \n\n" +
                        "* You can colorize as your preference. \n\n" +
-                       "* To delete a text tap and hold. \n\n" +
                        "* Save/delete card with right buttons."
         alertMessage("Help", message: helpText)
-    }
-    
-    // Mark: - Methods
-    
-    private func configureDesigner() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.listenToTemplatesArrival),
-                                               name: NSNotification.Name(AllTemplates.templatesNotificationId),
-                                               object: nil)
-    }
-    
-    private func setInitalCardImage() {
-        if let m = templates.first?.imgObject {
-            cardImage.image = UIImage(data: m as Data)
-        }
-    }
-    
-    private func insertTextTopOfCardImage() {
-        
-    }
-    
-    private func moveTextFieldAroundCardImage() {
-        
-    }
-    
-    private func getBoundingLimitsOfImage() -> [String:Int]? {
-        if let cardImg = cardImage.image {
-            return ["x": Int(cardImage.frame.origin.x),
-                    "y": Int(cardImage.frame.origin.y),
-                    "w": Int(cardImg.size.width),
-                    "h": Int(cardImg.size.height)]
-        }
-        return nil
-    }
-    
-    // Mark: - Helpers
-    
-    private func attachTextField() {
-        let coords = getBoundingLimitsOfImage()!
-        print(coords)
-        
-        let textField = generateTextField(x: coords["x"]! + 20, y: coords["y"]! + 20, w: 70, h: 30)
-        view.addSubview(textField)
-
-        print(calculateRectOfImageInImageView(imageView: cardImage))
-    }
-    
-    private func destroyTextField() {
-    }
-    
-    private func moveTextField(x: Int, y: Int) {
-        
-    }
-
-    private func generateTextField(x: Int, y: Int, w: Int, h: Int) -> UITextField {
-        let textField = UITextField(frame: CGRect(x: x, y: y, width: w, height: h))
-        
-        textField.placeholder = "Your text here .."
-        textField.font = UIFont.systemFont(ofSize: 15)
-        textField.borderStyle = UITextBorderStyle.none
-        textField.autocorrectionType = UITextAutocorrectionType.no
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        textField.isUserInteractionEnabled = true
-        textField.textAlignment = NSTextAlignment.center
-        return textField
-    }
-
-    private func registerGestures(textField: UITextField) {
-        let longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                            action: #selector(handleLongPress(_:)))
-        longPressGesture.minimumPressDuration = 1.0
-        longPressGesture.allowableMovement = 15
-        longPressGesture.delegate = self
-        
-        textField.addGestureRecognizer(longPressGesture)
     }
     
     func handleLongPress(_ gestureRecognizer: UIGestureRecognizer){
@@ -205,7 +141,99 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
         }
     }
 
-    func calculateRectOfImageInImageView(imageView: UIImageView) -> CGRect {
+    // Mark: - Methods
+    
+    private func configureDesigner() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.listenToTemplatesArrival),
+                                               name: NSNotification.Name(AllTemplates.templatesNotificationId),
+                                               object: nil)
+    }
+    
+    private func initiateDesigner() {
+        if let i = navToImageIndex {
+            setImageAtIndex(i)
+            templatePicker.selectRow(i, inComponent: 0, animated: true)
+        }
+    }
+    
+    private func setInitalCardImage() {
+        if let m = templates.first?.imgObject {
+            cardImage.image = UIImage(data: m as Data)
+        }
+    }
+    
+    private func setImageAtIndex(_ index: Int) {
+        if let m = templates[index].imgObject {
+            cardImage.image = UIImage(data: m as Data)
+        }
+    }
+
+    private func insertTextTopOfCardImage() {
+    }
+    
+    private func registerGestures(textField: UITextField) {
+        let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                            action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0
+        longPressGesture.allowableMovement = 15
+        longPressGesture.delegate = self
+        
+        textField.addGestureRecognizer(longPressGesture)
+    }
+
+    private func getBoundingLimitsOfImage() -> [String:Int] {
+        let coords = calculateRectOfImage(imageView: cardImage)
+        return ["x": Int(coords.origin.x),
+                "y": Int(coords.origin.y),
+                "w": Int(coords.size.width),
+                "h": Int(coords.size.height)]
+    }
+    
+    // Mark: - Helpers
+    
+    private func attachTextField() {
+        if insertedText != nil {
+            return
+        }
+        
+        let coords = getBoundingLimitsOfImage()
+        insertedText = generateTextField(x: coords["x"]! + 100, y: coords["y"]! + 80, w: 190, h: 30)
+        view.addSubview(insertedText!)
+    }
+    
+    private func destroyTextField() {
+        insertedText = nil
+        view.viewWithTag(insertedTextTag)
+    }
+    
+    private func generateTextField(x: Int, y: Int, w: Int, h: Int) -> UITextField {
+        let textField = UITextField(frame: CGRect(x: x, y: y, width: w, height: h))
+        textField.placeholder = "Your text here ..."
+        textField.tag = insertedTextTag
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.textColor = textInsertColor
+        textField.borderStyle = UITextBorderStyle.none
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        textField.textAlignment = NSTextAlignment.center
+        textField.isUserInteractionEnabled = true
+        // textField.addTarget(self, action: #selector(nil), for: UIControlEvents.touchDragEnter)
+        
+        return textField
+    }
+
+    private func moveTextFieldAround(textfield: UITextField, x: Int, y: Int, width: Int, height: Int) {
+        let x = CGFloat(x)
+        let y = CGFloat(y)
+        let w = CGFloat(width)
+        let h = CGFloat(height)
+        
+        textfield.frame = CGRect(x: x, y: y, width: w, height: h)
+    }
+
+    private func calculateRectOfImage(imageView: UIImageView) -> CGRect {
         let imageViewSize = imageView.frame.size
         let imgSize = imageView.image?.size
         

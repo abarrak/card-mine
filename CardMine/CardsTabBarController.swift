@@ -83,7 +83,6 @@ class CardsTabBarController: UITabBarController {
         newButton       = UIBarButtonItem(image: n, style: UIBarButtonItemStyle.plain,
                                           target: self, action: #selector(new))
         
-        navigationItem.title = "My Cards"
         navigationItem.leftBarButtonItem = logoutButton
         navigationItem.rightBarButtonItems = [refershButton!, newButton!]
     }
@@ -117,6 +116,6 @@ class CardsTabBarController: UITabBarController {
     private func fetchAllCardsData() {
         
     }
-    
+        
     // Mark: - Helpers
 }

@@ -61,6 +61,7 @@ extension CardMineClient {
             static let UserId       = "user_id"
             static let TemplateId   = "template_id"
             static let Draft        = "draft"
+            static let TextualContents = "textual_contents"
             static let TextualContentAttributes = "textual_content_attributes"
             
             // Textual Content resource keys

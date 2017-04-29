@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-struct User {
+class User {
     // Mark: - Properties
     
     var id: Int
@@ -18,20 +17,14 @@ struct User {
     var firstName: String?
     var lastName: String?
     
-    var createdAt: Date
-    var updatedAt: Date
-    
     // Mark: - Initializers
     
-    init(id: Int, email: String, nickname: String, firstName: String?, lastName: String?,
-         createdAt: Date, updatedAt: Date) {
+    init(id: Int, email: String, nickname: String, firstName: String?, lastName: String?) {
         self.id         = id
         self.email      = email
         self.nickname   = nickname
         self.firstName  = firstName
         self.lastName   = lastName
-        self.createdAt  = createdAt
-        self.updatedAt  = updatedAt
     }
     
     init(dictionary: [String : AnyObject]) {
@@ -40,7 +33,25 @@ struct User {
         nickname    = dictionary[CardMineClient.Constants.JSONPayloadKeys.Nickname]     as! String
         firstName   = dictionary[CardMineClient.Constants.JSONPayloadKeys.FirstName]    as? String
         lastName    = dictionary[CardMineClient.Constants.JSONPayloadKeys.LastName]     as? String
-        createdAt   = (dictionary[CardMineClient.Constants.JSONPayloadKeys.CreatedAt]   as! String).toDate()!
-        updatedAt   = (dictionary[CardMineClient.Constants.JSONPayloadKeys.UpdatedAt]   as! String).toDate()!
+    }
+
+    // Mark: - Methods
+
+    static func persistUser(user: User) {
+        UserDefaults.standard.set(user.id, forKey: "currentUser[id]")
+        UserDefaults.standard.set(user.email, forKey: "currentUser[email]")
+        UserDefaults.standard.set(user.nickname, forKey: "currentUser[nickname]")
+        UserDefaults.standard.set(user.firstName, forKey: "currentUser[firstName]")
+        UserDefaults.standard.set(user.lastName, forKey: "currentUser[lastName]")
+    }
+    
+    static func retrievetUser() -> User? {
+        let i = UserDefaults.standard.integer(forKey: "currentUser[id]")
+        let e = UserDefaults.standard.string(forKey: "currentUser[email]")
+        let n = UserDefaults.standard.string(forKey: "currentUser[nickname]")
+        let f = UserDefaults.standard.string(forKey: "currentUser[firstName]")
+        let l = UserDefaults.standard.string(forKey: "currentUser[lastName]")
+        
+        return e != nil && n != nil ? User(id: i, email: e!, nickname: n!, firstName: f, lastName: l) : nil
     }
 }

@@ -21,13 +21,16 @@ struct UserAuthInfo {
     var expiry: String
     var uid: String
     
+    var currentUser: User?
+    
     // Mark: - Initializers
     
-    init(accessToken: String, client: String, expiry: String, uid: String) {
+    init(accessToken: String, client: String, expiry: String, uid: String, currentUser: User?) {
         self.accessToken = accessToken
         self.client      = client
         self.expiry      = expiry
         self.uid         = uid
+        self.currentUser = currentUser
     }
     
     init(dictionary: [String : AnyObject]) {
@@ -44,14 +47,21 @@ struct UserAuthInfo {
         storeSet(key: "client", value: client)
         storeSet(key: "expiry", value: expiry)
         storeSet(key: "uid", value: uid)
+        
+        User.persistUser(user: currentUser!)
     }
     
     static func retrieve() -> UserAuthInfo? {
+        let user = User.retrievetUser()
+
         if let _accessToken = storeGet("accessToken") {
             if let _client = storeGet("client") {
                 if let _expiry = storeGet("expiry") {
                     if let _uid = storeGet("uid") {
-                        return self.init(accessToken: _accessToken, client: _client, expiry: _expiry, uid: _uid)
+                        return self.init(accessToken: _accessToken,
+                                         client: _client,
+                                         expiry: _expiry,
+                                         uid: _uid, currentUser: user)
                     }
                 }
             }
@@ -72,5 +82,5 @@ struct UserAuthInfo {
     
     private func storeSet(key: String, value: String) {
         UserDefaults.standard.set(value, forKey: key)
-    }
+    }    
 }

@@ -7,19 +7,26 @@
 //
 
 import Foundation
+import CoreData
 
 extension CardMineClient {
     
     // Mark: - Definitions
     
-    typealias loginCallback  = (_ success: Bool, _ errorString: String?, _ userAuth: UserAuthInfo?) -> Void
+    typealias loginCallback  = (_ success: Bool, _ errorString: String?, _ userAuth: UserAuthInfo?,
+                                _ currentUser: User?) -> Void
     typealias logoutCallback = (_ success: Bool, _ errorString: String?) -> Void
     typealias signUpCallback = (_ success: Bool, _ errorString: String?, _ user: User) -> Void
     typealias deleteAccountCallback = (_ success: Bool, _ errorString: String?) -> Void
     
     typealias contentCallback  = (_ success: Bool, _ errorString: String?, _ content: String?) -> Void
     typealias templatesCallback  = (_ success: Bool, _ errorString: String?, _ templates: [Template]?) -> Void
-    
+
+    typealias getCardsCallback    = (_ success: Bool, _ errorString: String?, _ cards: [Card]?) -> Void
+    typealias createCardCallback  = (_ success: Bool, _ errorString: String?, _ card: Card?) -> Void
+    typealias updateCardCallback  = (_ success: Bool, _ errorString: String?, _ card: Card?) -> Void
+    typealias deleteCardCallback  = (_ success: Bool, _ errorString: String?, _ message: String?) -> Void
+
     
     // Mark: - Auth
 
@@ -32,29 +39,35 @@ extension CardMineClient {
         { (auth, payload, error) in
             
             if error != nil {
-                callback(false, "Login failed: \(error!.localizedDescription)", nil)
+                callback(false, "Login failed: \(error!.localizedDescription)", nil, nil)
                 return
             }
             
             if let errors = payload?[Constants.JSONPayloadKeys.Errors] as? [String] {
-                callback(false, "Login failed. \(errors)", nil)
+                callback(false, "\(errors.first!)", nil, nil)
                 return
             }
             
             // Extract json top level key and verify it has user created.
             let dataDict = payload?[Constants.JSONPayloadKeys.Data] as? [String:Any?]
             if dataDict == nil {
-                callback(false, "Unexpected parsing error occured.", nil)
+                callback(false, "Unexpected parsing error occured.", nil, nil)
                 return
             }
             
             guard dataDict?[Constants.JSONPayloadKeys.Id] as? Int != nil else {
-                callback(false, "Unexpected error occured while parsing user info.", nil)
+                callback(false, "Unexpected error occured while parsing user info.", nil, nil)
                 return
             }
             
-            // Extract our auth values from response headers
-            auth == nil ? callback(false, "Authentication Failed", nil) : callback(true, nil, auth)
+            let user = User(dictionary: dataDict as! [String : AnyObject])
+            
+            if var _a = auth {
+                _a.currentUser = user
+                callback(true, nil, _a, user)
+            } else {
+                callback(false, "Authentication Failed", nil, nil)
+            }
         }
     }
     
@@ -117,7 +130,27 @@ extension CardMineClient {
         }
     }
     
-    func getAllCards() {
+    func getCards(auth: UserAuthInfo, context: NSManagedObjectContext, callback: @escaping getCardsCallback) {
+        let endpoint = "\(Constants.EndPoints.Cards)/"
+        
+        let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "GET", jsonBody: nil, auth: auth) { (auth, payload, error) in
+            
+            if error != nil {
+                callback(false, "Server Erro: \(error!.localizedDescription)", nil)
+                return
+            }
+            
+            if let errors = payload?[Constants.JSONPayloadKeys.Errors] as? [String:Any?] {
+                callback(false, "Loading Error. \n\(errors)", nil)
+                return
+            }
+            
+            if let cards = payload as? [[String : Any]]  {
+                callback(true, nil, Card.buildList(cards, context: context))
+            } else {
+                callback(false, "Unable to parse server results !", nil)
+            }
+        }
     }
     
     func createCard() {
@@ -125,11 +158,11 @@ extension CardMineClient {
     
     func updateCard() {
     }
-    
-    func getCard() {
+        
+    func deleteCard() {
     }
     
-    func deleteCard() {
+    func getTextualContents() {
     }
     
     func addTextualContentToCard() {

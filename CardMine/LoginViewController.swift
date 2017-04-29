@@ -55,9 +55,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let email = emailText.text!, password = passwordText.text!
         
-        CardMineClient.shared.login(email: email, password: password) {(success, error, auth) in
+        CardMineClient.shared.login(email: email, password: password) {(success, error, auth, currentUser) in
             if !success {
-                performAsync { self.alertMessage("Falied", message: error ?? "Unexpected Error") }
+                performAsync {
+                    self.alertMessage("Failed", message: error ?? "Unexpected Error")
+                }
             } else {
                 performAsync {
                     self.persistAuthUserInfo(userAuth: auth!)
