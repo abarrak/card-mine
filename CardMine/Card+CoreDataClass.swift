@@ -48,4 +48,8 @@ public class Card: NSManagedObject {
         }
         return result
     }
+    
+    func toJSON() -> String {
+        return ""
+    }
 }

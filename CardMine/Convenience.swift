@@ -136,7 +136,7 @@ extension CardMineClient {
         let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "GET", jsonBody: nil, auth: auth) { (auth, payload, error) in
             
             if error != nil {
-                callback(false, "Server Erro: \(error!.localizedDescription)", nil)
+                callback(false, "Server Error: \(error!.localizedDescription)", nil)
                 return
             }
             
@@ -153,7 +153,27 @@ extension CardMineClient {
         }
     }
     
-    func createCard() {
+    func createCard(card: Card, auth: UserAuthInfo, context: NSManagedObjectContext, callback: @escaping createCardCallback) {
+        let endpoint = "\(Constants.EndPoints.Cards)/"
+        
+        let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "POST", jsonBody: card.toJSON(), auth: auth) { (auth, payload, error) in
+            
+            if error != nil {
+                callback(false, "Server Error: \(error!.localizedDescription)", nil)
+                return
+            }
+            
+            if let errors = payload?[Constants.JSONPayloadKeys.Errors] as? [String:Any?] {
+                callback(false, "Loading Error. \n\(errors)", nil)
+                return
+            }
+            
+            if let card = payload as? [String : Any]  {
+                callback(true, nil, Card(card, context: context))
+            } else {
+                callback(false, "Unable to parse server results !", nil)
+            }
+        }
     }
     
     func updateCard() {
