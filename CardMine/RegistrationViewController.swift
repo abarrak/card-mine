@@ -19,11 +19,23 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var firstNameFiled: UITextField!
     @IBOutlet weak var lastNameField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
 
     // Mark: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        spinner.scale(factor: 1.4)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
     
     // Mark: - Actions & Protocols
@@ -34,7 +46,7 @@ class RegistrationViewController: UIViewController {
             return
         }
         enableUI(false)
-
+        spin(true)
         CardMineClient.shared.signUp(email: emailField.text!, password: passwordField.text!,
                                      passwordConfirmation: passwordConfirmationField.text!,
                                      nickname: nicknameField.text!,
@@ -56,7 +68,10 @@ class RegistrationViewController: UIViewController {
                     }
                 }
             }
-            performAsync { self.enableUI(true) }
+            performAsync {
+                self.enableUI(true)
+                self.spin(false)
+            }
         }
 
     }
@@ -64,8 +79,8 @@ class RegistrationViewController: UIViewController {
     // Mark: - Methods
 
     func validatePresence() -> Bool {
-        // the only validation the we will do .. 
-        // API validates it also with the rest ..
+        // The only validation the we will do ..
+        // leaving the rest for API to validate.
         let fields = [emailField, passwordField, passwordConfirmationField, nicknameField]
         for f in fields {
             if (f?.text?.isBlank())! {
@@ -77,9 +92,42 @@ class RegistrationViewController: UIViewController {
 
     // Mark: - Resolve Keyboard/UI issue
 
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+
+    func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+
+    func keyboardWillShow(_ notification: Notification) {
+        if firstNameFiled.isEditing && isDeviceLandscape() {
+            view.frame.origin.y = -super.getKeyboardHeight(notification)
+        } else if lastNameField.isEditing {
+            view.frame.origin.y = -super.getKeyboardHeight(notification)
+        }
+    }
+
+    func keyboardWillHide(_ notification: Notification) {
+        view.frame.origin.y = 0
+    }
+
+    private func isDeviceLandscape() -> Bool {
+        return UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft ||
+            UIDevice.current.orientation == UIDeviceOrientation.landscapeRight
+    }
+
     // Mark: - Helpers
 
     private func enableUI(_ enabled: Bool) {
         signUpButton.isEnabled = enabled
+    }
+
+    private func spin(_ state: Bool) {
+        spinner.isHidden = !state
     }
 }
