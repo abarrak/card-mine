@@ -16,7 +16,7 @@ extension CardMineClient {
     typealias loginCallback  = (_ success: Bool, _ errorString: String?, _ userAuth: UserAuthInfo?,
                                 _ currentUser: User?) -> Void
     typealias logoutCallback = (_ success: Bool, _ errorString: String?) -> Void
-    typealias signUpCallback = (_ success: Bool, _ errorString: String?, _ user: User) -> Void
+    typealias signUpCallback = (_ success: Bool, _ errorString: String?, _ user: User?) -> Void
     typealias deleteAccountCallback = (_ success: Bool, _ errorString: String?) -> Void
     
     typealias contentCallback  = (_ success: Bool, _ errorString: String?, _ content: String?) -> Void
@@ -93,9 +93,46 @@ extension CardMineClient {
     }
     
     func signUp(email: String, password: String, passwordConfirmation: String, nickname: String,
-                firstName: String, lastName: String, callback: @escaping signUpCallback) {
+                firstName: String?, lastName: String?, callback: @escaping signUpCallback) {
         
-    }
+        let endpoint = "\(Constants.EndPoints.Auth)/"
+        let body = registerRequestBody(email: email.trim(), password: password.trim(),
+                                       passwordConfirmation: passwordConfirmation.trim(),
+                                       nickname: nickname.trim(), firstName: firstName, lastName: lastName)
+
+        let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "POST", jsonBody: body)
+        { (auth, payload, error) in
+
+            if error != nil {
+                callback(false, "Sign up failed: \(error!.localizedDescription)", nil)
+                return
+            }
+
+            if let errors = payload?[Constants.JSONPayloadKeys.Errors] as? [String:Any?] {
+                callback(false, self.stringifyErrorDictionary(errors), nil)
+                return
+            }
+
+            // Extract json top level key and verify it has user created.
+            let dataDict = payload?[Constants.JSONPayloadKeys.Data] as? [String:Any?]
+            if dataDict == nil {
+                callback(false, "Unexpected parsing error occured.", nil)
+                return
+            }
+
+            guard dataDict?[Constants.JSONPayloadKeys.Id] as? Int != nil else {
+                callback(false, "Unexpected error occured while parsing sign up info.", nil)
+                return
+            }
+
+            let user = User(dictionary: dataDict as! [String : AnyObject])
+            if user.id != 0 {
+                callback(true, nil, user)
+            } else {
+                callback(false, "Sign Up Failed", nil)
+            }
+        }
+  }
     
     func deleteAccount(callback: @escaping deleteAccountCallback) {
         // TODO ..
@@ -235,11 +272,29 @@ extension CardMineClient {
         return "{\"\(Constants.JSONPayloadKeys.Email)\": \"\(email)\", \"\(Constants.JSONPayloadKeys.Password)\": \"\(password)\"}"
     }
     
-    private func registerRequestBody() {
-        
+    private func registerRequestBody(email: String, password: String, passwordConfirmation: String,
+                                     nickname: String, firstName: String?, lastName: String?) -> String {
+        var body = "{\"\(Constants.JSONPayloadKeys.Email)\": \"\(email)\", \"\(Constants.JSONPayloadKeys.Password)\": \"\(password)\", \"\(Constants.JSONPayloadKeys.PasswrodConfirmation)\": \"\(passwordConfirmation)\", \"\(Constants.JSONPayloadKeys.Nickname)\": \"\(nickname)\""
+
+        if let fN = firstName {
+            body += ", \"\(Constants.JSONPayloadKeys.FirstName)\": \"\(fN.trim())\""
+        }
+        if let lN = lastName {
+            body += ", \"\(Constants.JSONPayloadKeys.LastName)\": \"\(lN.trim())\""
+        }
+        body += "}"
+        return body
     }
     
-    private func unpackErrorDictionary(errors: [String:Any?]) -> String? {
-        return nil
+    private func stringifyErrorDictionary(_ errorsDict: [String:Any?]) -> String? {
+        var errorsList: [String] = []
+
+        if let errors = errorsDict["full_messages"] as? [String] {
+            errorsList.append("* Please correct the following errors: \n")
+            for e in errors {
+                errorsList.append("– \(e).\n")
+            }
+        }
+        return errorsList.joined(separator: "")
     }
 }

@@ -2,7 +2,7 @@
 //  Card+CoreDataProperties.swift
 //  CardMine
 //
-//  Created by Abdullah on 4/27/17.
+//  Created by Abdullah on 6/16/17.
 //  Copyright © 2017 Abdullah Barrak. All rights reserved.
 //
 

@@ -16,38 +16,52 @@ class CardViewerViewController: UIViewController {
     @IBOutlet weak var cardTitle: UILabel!
     @IBOutlet weak var createdAtLabel: UILabel!
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    
+
+    var finalCard: FinalCard?
+
     // Mark: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        previewCard()
+    }
     
     // Mark: - Actions & Protocols
-    
-    // Mark: - Methods
-    
+
     @IBAction func share() {
-        let card = renderScreenImage()
-        
-        let activityController = UIActivityViewController(activityItems: [card], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: [cardImage.image!],
+                                                          applicationActivities: nil)
+
         activityController.completionWithItemsHandler = {
             (type, completed, returnedItems, error) -> Void in
             if completed {
+                if error == nil {
+                    self.alertMessage("Shared", message: "Your card has been shared successfully.")
+                } else {
+                    self.alertMessage("Error", message: "Share failed. Please try again.")
+
+                }
                 self.dismiss(animated: true, completion: nil)
             }
         }
         present(activityController, animated: true, completion: nil)
     }
-    
-    func renderScreenImage() -> UIImage {
-        UIGraphicsBeginImageContext(view.frame.size)
-        
-        view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
-        let screenImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        
-        UIGraphicsEndImageContext()
-        
-        return screenImage
+
+    // Mark: - Methods
+
+    func setCard(_ card: FinalCard) {
+        finalCard = card
+    }
+
+    private func previewCard() {
+        if let card = finalCard {
+            cardImage.image = UIImage(data: card.imgObject as! Data)!
+            cardTitle.text = card.title!
+            createdAtLabel.text = (card.createdAt as! Date).toString()
+        }
     }
 }

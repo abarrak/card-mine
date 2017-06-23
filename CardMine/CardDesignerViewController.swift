@@ -10,7 +10,7 @@ import UIKit
 import CoreGraphics
 
 class CardDesignerViewController: UIViewController, UIPopoverPresentationControllerDelegate,
-UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate  {
+      UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate  {
     
     // Mark: - Properties
     
@@ -26,9 +26,10 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     let insertedTextTag = 995
     var insertedText: UITextField?
     var textInsertColor = UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
-    
+    var newCardTitle: String?
+
     var navToImageIndex: Int?
-    
+
     var templates: [Template] {
         get {
             return AllTemplates.templates
@@ -54,6 +55,7 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navToImageIndex = nil
+        destroyTextField()
     }
     
     // Mark: - Actions & Protocols
@@ -109,28 +111,46 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
         present(popoverVC, animated: true, completion: nil)
     }
     
+    @IBAction func insertText(_ sender: UIBarButtonItem) {
+        attachTextField()
+    }
+
+    @IBAction func showHelpPopup() {
+        let helpText = "* Use insert icon to create text. \n" +
+            "* Move it around by touch and drag. \n\n" +
+            "* You can colorize as your preference. \n\n" +
+        "* Save/delete card with right buttons."
+        alertMessage("Help", message: helpText)
+    }
+
+    @IBAction func save(_ sender: UIBarButtonItem) {
+        // generate card ..
+        let genImage = generateCardImage()
+
+        // If title is given, save card then navigate to it in viewer ..
+        askForTitle() {
+            let final = FinalCard(title: self.newCardTitle!, image: genImage, context: self.context)
+            self.saveInStore()
+            self.goToViewer(final)
+        }
+    }
+
+    @IBAction func trash(_ sender: UIBarButtonItem) {
+        alertQuestion("Discard", message: "Discard current card ?") { (alert) in
+            self.closeDesigner()
+        }
+    }
+
     func setColorCallback (_ color: UIColor) {
         colorButton.tintColor = color
         textInsertColor = color
         textInsertButton.tintColor = color
         insertedText?.textColor = color
     }
-    
-    @IBAction func insertText(_ sender: UIBarButtonItem) {
-        attachTextField()
-    }
 
     func listenToTemplatesArrival() {
         setInitalCardImage()
         templatePicker.reloadAllComponents()
-    }
-    
-    @IBAction func showHelpPopup() {
-        let helpText = "* Use insert icon to create text. \n" +
-                       "* Move it around by touch and drag. \n\n" +
-                       "* You can colorize as your preference. \n\n" +
-                       "* Save/delete card with right buttons."
-        alertMessage("Help", message: helpText)
     }
     
     func handleLongPress(_ gestureRecognizer: UIGestureRecognizer){
@@ -189,7 +209,42 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
                 "w": Int(coords.size.width),
                 "h": Int(coords.size.height)]
     }
-    
+
+    private func generateCardImage() -> UIImage {
+        UIGraphicsBeginImageContext(cardImage.frame.size)
+        cardImage.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+
+    private func askForTitle(completed: @escaping () -> Void) {
+        let alertController = UIAlertController(title: "Title?",
+                                                message: "please enter title for card:",
+                                                preferredStyle: .alert)
+
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Title"
+        }
+
+        alertController.addAction(UIAlertAction(title: "Confirm", style: .default) { (action) in
+            if let field = alertController.textFields?[0] {
+                self.newCardTitle = field.text
+                completed()
+            }
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (_) in })
+
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    private func goToViewer(_ card: FinalCard) {
+        let viewer = storyboard?.instantiateViewController(withIdentifier: "cardViewer")
+                     as! CardViewerViewController
+        viewer.setCard(card)
+        navigationController?.pushViewController(viewer, animated: true)
+    }
+
     // Mark: - Helpers
     
     private func attachTextField() {
@@ -199,12 +254,13 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
         
         let coords = getBoundingLimitsOfImage()
         insertedText = generateTextField(x: coords["x"]! + 100, y: coords["y"]! + 80, w: 190, h: 30)
-        view.addSubview(insertedText!)
+        cardImage.isUserInteractionEnabled = true
+        cardImage.addSubview(insertedText!)
     }
     
     private func destroyTextField() {
         insertedText = nil
-        view.viewWithTag(insertedTextTag)
+        cardImage.viewWithTag(insertedTextTag)?.removeFromSuperview()
     }
     
     private func generateTextField(x: Int, y: Int, w: Int, h: Int) -> UITextField {
@@ -220,7 +276,7 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
         textField.textAlignment = NSTextAlignment.center
         textField.isUserInteractionEnabled = true
         // textField.addTarget(self, action: #selector(nil), for: UIControlEvents.touchDragEnter)
-        
+
         return textField
     }
 
@@ -256,6 +312,8 @@ UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIGestureReco
         
         return imageRect
     }
-    
-    // Mark: - Resolve Keyboard/UI issue
+
+    private func closeDesigner() {
+        let _ = navigationController?.popViewController(animated: true)
+    }
 }
