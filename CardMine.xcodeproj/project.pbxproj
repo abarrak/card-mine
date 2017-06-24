@@ -251,7 +251,6 @@
 		B84494841E62E4790095E426 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
-				B8FE67C21E7C2388000009D7 /* Entities */,
 				B8A8771A1E6A20A800FC0FE4 /* CardMineAPI */,
 				B8A877151E6A205000FC0FE4 /* AbstractAPI.swift */,
 			);
@@ -285,13 +284,6 @@
 				B8A877251E6A223700FC0FE4 /* Convenience.swift */,
 			);
 			name = CardMineAPI;
-			sourceTree = "<group>";
-		};
-		B8FE67C21E7C2388000009D7 /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -152,14 +152,6 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         setInitalCardImage()
         templatePicker.reloadAllComponents()
     }
-    
-    func handleLongPress(_ gestureRecognizer: UIGestureRecognizer){
-        if gestureRecognizer.state == UIGestureRecognizerState.ended {
-            let touchPoint = gestureRecognizer.location(in: view)
-            
-            _ = ["x": Int(touchPoint.x), "y": Int(touchPoint.y)]
-        }
-    }
 
     // Mark: - Methods
     
@@ -189,17 +181,27 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         }
     }
 
-    private func insertTextTopOfCardImage() {
+    private func registerInsertedTextDragGestures() {
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(userDragged))
+        insertedText?.addGestureRecognizer(gesture)
+        insertedText?.isUserInteractionEnabled = true
     }
-    
-    private func registerGestures(textField: UITextField) {
-        let longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                            action: #selector(handleLongPress(_:)))
-        longPressGesture.minimumPressDuration = 1.0
-        longPressGesture.allowableMovement = 15
-        longPressGesture.delegate = self
-        
-        textField.addGestureRecognizer(longPressGesture)
+
+    func userDragged(_ gesture: UIPanGestureRecognizer){
+        var loc = gesture.location(in: self.view)
+
+        let coords = getBoundingLimitsOfImage()
+        let y = coords["y"]!, h = coords["h"]!
+
+        if Int(loc.y) > (y + h) {
+            loc.y = CGFloat(y + h - 1)
+        }
+
+        if Int(loc.y) < (y - h) {
+            loc.y = CGFloat(y + 1)
+        }
+
+        self.insertedText?.center = loc
     }
 
     private func getBoundingLimitsOfImage() -> [String:Int] {
@@ -253,9 +255,10 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         }
         
         let coords = getBoundingLimitsOfImage()
-        insertedText = generateTextField(x: coords["x"]! + 100, y: coords["y"]! + 80, w: 190, h: 30)
+        insertedText = generateTextField(x: coords["x"]! + 80, y: coords["y"]! + 20, w: 190, h: 30)
         cardImage.isUserInteractionEnabled = true
         cardImage.addSubview(insertedText!)
+        registerInsertedTextDragGestures()
     }
     
     private func destroyTextField() {
@@ -275,7 +278,6 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         textField.textAlignment = NSTextAlignment.center
         textField.isUserInteractionEnabled = true
-        // textField.addTarget(self, action: #selector(nil), for: UIControlEvents.touchDragEnter)
 
         return textField
     }
