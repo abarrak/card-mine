@@ -152,8 +152,13 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
     }
 
     func listenToTemplatesArrival() {
-        setInitalCardImage()
         templatePicker.reloadAllComponents()
+        setInitalCardImage()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+            self.templatePicker.reloadAllComponents()
+            self.setInitalCardImage()
+        })
     }
 
     // Mark: - Methods

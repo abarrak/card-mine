@@ -15,6 +15,7 @@ class CardsGalleryViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var galleryTabBarItem: UITabBarItem!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     // Mark: - Life Cycle
     
@@ -36,6 +37,7 @@ class CardsGalleryViewController: UIViewController, UICollectionViewDelegate, UI
         automaticallyAdjustsScrollViewInsets = false
         setFlowLayout()
         colorizeTabBarItem()
+        spin()
     }
     
     private func setFlowLayout() {
@@ -77,7 +79,6 @@ class CardsGalleryViewController: UIViewController, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        
         return AllTemplates.count
     }
     
@@ -104,6 +105,16 @@ class CardsGalleryViewController: UIViewController, UICollectionViewDelegate, UI
     
     func listenToTemplatesArrival() {
         collectionView.reloadData()
+        spin()
+
+        for eta in [2.0, 3.0] {
+            DispatchQueue.main.asyncAfter(deadline: .now() + eta, execute: {
+                self.collectionView.reloadData()
+            })
+        }
     }
-    
+
+    private func spin() {
+        spinner.isHidden = collectionView.numberOfItems(inSection: 0) == 0 ? false : true
+    }
 }

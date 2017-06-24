@@ -64,7 +64,9 @@ class Template {
             guard let data = data, error == nil else {
                 return
             }
-            performAsync { self.imgObject = data as NSData }
+            performAsync {
+                self.imgObject = data as NSData
+            }
         }
     }
 }

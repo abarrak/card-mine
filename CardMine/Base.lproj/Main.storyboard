@@ -292,13 +292,21 @@
                                     </collectionView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="icX-8X-luv">
+                                <rect key="frame" x="0.0" y="270" width="375" height="198"/>
+                                <color key="color" red="0.47058823529999999" green="0.039215686270000001" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.94384806769999996" blue="0.93003594229999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="icX-8X-luv" firstAttribute="leading" secondItem="wX0-Rw-CAQ" secondAttribute="leading" id="1OW-4s-Tg3"/>
                             <constraint firstItem="lCJ-BZ-Qwj" firstAttribute="top" secondItem="wX0-Rw-CAQ" secondAttribute="bottom" id="4nh-Vi-aYj"/>
                             <constraint firstAttribute="trailing" secondItem="wX0-Rw-CAQ" secondAttribute="trailing" id="HZ4-Ro-nWZ"/>
+                            <constraint firstItem="lCJ-BZ-Qwj" firstAttribute="top" secondItem="icX-8X-luv" secondAttribute="bottom" constant="150" id="P5a-cu-9bV"/>
+                            <constraint firstItem="icX-8X-luv" firstAttribute="top" secondItem="OuW-vJ-Epf" secondAttribute="bottom" constant="250" id="eof-RZ-nnW"/>
                             <constraint firstItem="wX0-Rw-CAQ" firstAttribute="top" secondItem="OuW-vJ-Epf" secondAttribute="bottom" id="epr-dM-YjQ"/>
                             <constraint firstItem="wX0-Rw-CAQ" firstAttribute="leading" secondItem="9Qg-QO-UOv" secondAttribute="leading" id="l0e-wp-vxm"/>
+                            <constraint firstItem="icX-8X-luv" firstAttribute="trailing" secondItem="wX0-Rw-CAQ" secondAttribute="trailing" id="mnb-Yt-Ixx"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Gallery" image="GallerySelected" selectedImage="GalleryDeselected" id="7Ta-Sb-FJi"/>
@@ -306,6 +314,7 @@
                         <outlet property="collectionView" destination="WPr-2v-1c2" id="xIm-9k-yXu"/>
                         <outlet property="flowLayout" destination="iXQ-JA-NaL" id="NaS-dI-GRS"/>
                         <outlet property="galleryTabBarItem" destination="7Ta-Sb-FJi" id="Mqs-3V-Pju"/>
+                        <outlet property="spinner" destination="icX-8X-luv" id="tPG-sV-kHL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYq-98-pAZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

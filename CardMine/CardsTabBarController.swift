@@ -12,7 +12,6 @@ class CardsTabBarController: UITabBarController {
     // Mark: - Properties
     
     var logoutButton: UIBarButtonItem? = nil
-    var refershButton: UIBarButtonItem? = nil
     var newButton: UIBarButtonItem? = nil
     
     // Mark: - Life Cycle
@@ -69,22 +68,17 @@ class CardsTabBarController: UITabBarController {
     // Mark: - Methods
     
     private func setupTopBar() {
-        let r : UIImage? = UIImage.init(named: "Refresh")!.withRenderingMode(.alwaysOriginal)
-        let n : UIImage? = UIImage.init(named: "New")!.withRenderingMode(.alwaysOriginal)
-
         logoutButton    = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain,
                                           target: self,
                                           action: #selector(logoutPressed))
         styleLoginTextAndNavBar()
-        
-        refershButton   = UIBarButtonItem(image: r, style: UIBarButtonItemStyle.plain,
-                                          target: self, action: #selector(refersh))
-        
+
+        let n : UIImage? = UIImage.init(named: "New")!.withRenderingMode(.alwaysOriginal)
         newButton       = UIBarButtonItem(image: n, style: UIBarButtonItemStyle.plain,
                                           target: self, action: #selector(new))
         
         navigationItem.leftBarButtonItem = logoutButton
-        navigationItem.rightBarButtonItems = [refershButton!, newButton!]
+        navigationItem.rightBarButtonItem = newButton!
     }
     
     private func styleLoginTextAndNavBar() {
