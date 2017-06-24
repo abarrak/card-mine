@@ -47,7 +47,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 navigateToCards()
             }
         }
-        AllTemplates.load()
     }
     
     private func login() {

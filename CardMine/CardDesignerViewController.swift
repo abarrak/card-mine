@@ -23,7 +23,7 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
     @IBOutlet weak var cardImage: UIImageView!
     @IBOutlet weak var helpButton: UIBarButtonItem!
     
-    var insertedText: UITextField?
+    var insertedTexts: [UITextField] = []
     var textInsertColor = UIColor(red: 128.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
     static let insertedTextInitialTag = 995
     var insertedTextTag = CardDesignerViewController.insertedTextInitialTag
@@ -90,12 +90,13 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         setImageAtIndex(row)
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
+        textField.resignFirstResponder()
         return true
     }
-    
+
     @IBAction func showColorPicker(_ sender: UIBarButtonItem) {
         let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover")
                         as! ColorPickerViewController
@@ -148,7 +149,7 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         colorButton.tintColor = color
         textInsertColor = color
         textInsertButton.tintColor = color
-        insertedText?.textColor = color
+        insertedTexts.last?.textColor = color
     }
 
     func listenToTemplatesArrival() {
@@ -189,19 +190,20 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         }
     }
 
-    private func registerInsertedTextDragGestures() {
+    private func registerInsertedTextDragGestures(_ textField: UITextField) {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(userDragged))
-        insertedText?.addGestureRecognizer(gesture)
-        insertedText?.isUserInteractionEnabled = true
+        textField.addGestureRecognizer(gesture)
+        textField.isUserInteractionEnabled = true
     }
 
-    private func unregisterInsertedTextDragGestures() {
+    private func unregisterInsertedTextDragGestures(_ textField: UITextField) {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(userDragged))
-        insertedText?.removeGestureRecognizer(gesture)
+        textField.removeGestureRecognizer(gesture)
     }
 
     func userDragged(_ gesture: UIPanGestureRecognizer){
         var loc = gesture.location(in: self.view)
+        let textField = gesture.view as! UITextField
 
         let coords = getBoundingLimitsOfImage()
         let y = coords["y"]!, h = coords["h"]!
@@ -214,7 +216,7 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
             loc.y = CGFloat(y + 1)
         }
 
-        self.insertedText?.center = loc
+        textField.center = loc
     }
 
     private func getBoundingLimitsOfImage() -> [String:Int] {
@@ -226,7 +228,7 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
     }
 
     private func generateCardImage() -> UIImage {
-        UIGraphicsBeginImageContext(cardImage.frame.size)
+        UIGraphicsBeginImageContextWithOptions(cardImage.frame.size, view.isOpaque, 0.0)
         cardImage.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -263,17 +265,26 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
     // Mark: - Helpers
     
     private func attachTextField() {
-        if insertedText != nil {
-            unregisterInsertedTextDragGestures()
-        }
+        // commented following lines to keep all inserted text draggable ..
+        // if insertedText != nil {
+        //    unregisterInsertedTextDragGestures()
+        // }
+
+        let placeForNewtextOrder = (insertedTextTag - CardDesignerViewController.insertedTextInitialTag) * 20
 
         let coords = getBoundingLimitsOfImage()
-        insertedText = generateTextField(x: coords["x"]! + 80, y: coords["y"]! + 20, w: 190, h: 30,
-                                         tag: insertedTextTag)
+        let insertedText = generateTextField(x: coords["x"]! + 80,
+                                             y: coords["y"]! + 20 + placeForNewtextOrder,
+                                             w: 190,
+                                             h: 30,
+                                             tag: insertedTextTag)
         insertedTextTag += 1
+        insertedTexts.append(insertedText)
+
         cardImage.isUserInteractionEnabled = true
-        cardImage.addSubview(insertedText!)
-        registerInsertedTextDragGestures()
+        cardImage.addSubview(insertedText)
+
+        registerInsertedTextDragGestures(insertedText)
     }
     
     private func destroyTextField() {
@@ -282,6 +293,10 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
 
         for tag in (firstTag...lastTag) {
             cardImage.viewWithTag(tag)?.removeFromSuperview()
+        }
+
+        for t in insertedTexts {
+            unregisterInsertedTextDragGestures(t)
         }
     }
     
@@ -297,6 +312,7 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         textField.textAlignment = NSTextAlignment.center
         textField.isUserInteractionEnabled = true
+        textField.delegate = self
 
         return textField
     }

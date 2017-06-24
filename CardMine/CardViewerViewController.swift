@@ -45,7 +45,6 @@ class CardViewerViewController: UIViewController {
                     self.alertMessage("Error", message: "Share failed. Please try again.")
 
                 }
-                self.dismiss(animated: true, completion: nil)
             }
         }
         present(activityController, animated: true, completion: nil)

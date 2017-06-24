@@ -82,6 +82,29 @@ class CardsTableViewController : UITableViewController, NSFetchedResultsControll
         }
     }
 
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            if let cardToDelete = FinalCard.find(indexPath.row + 1, context: context) {
+                context.delete(cardToDelete)
+                do {
+                    try context.save()
+                } catch {
+                    self.alertMessage("Erro", message: "Deleteing card failed.")
+                }
+                loadFinalCards()
+            }
+            // other way of doing it ..
+            // tableView.beginUpdates()
+            // tableView.deleteRows(at: [indexPath], with: .fade)
+            // tableView.endUpdates()
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "presentCardViewer" {
             let controller = segue.destination as! CardViewerViewController
@@ -119,6 +142,4 @@ class CardsTableViewController : UITableViewController, NSFetchedResultsControll
             }
         }
     }
-
-    // Mark: - Helpers
 }

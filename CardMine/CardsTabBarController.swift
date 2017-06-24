@@ -23,7 +23,6 @@ class CardsTabBarController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        refersh()
     }
     
     // Mark: - Actions & Protocol
@@ -52,10 +51,6 @@ class CardsTabBarController: UITabBarController {
                 // self.alertMessage("Success", message: "Logged out successfully.")
             })
         }
-    }
-    
-    func refersh() {
-        fetch()
     }
     
     func new() {
@@ -102,14 +97,4 @@ class CardsTabBarController: UITabBarController {
     private func setUIEnabled(_ enabled: Bool) {
         logoutButton?.isEnabled = enabled
     }
-    
-    private func fetch() {
-        
-    }
-    
-    private func fetchAllCardsData() {
-        
-    }
-        
-    // Mark: - Helpers
 }

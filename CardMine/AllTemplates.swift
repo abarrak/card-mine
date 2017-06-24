@@ -16,6 +16,7 @@ class AllTemplates {
         get { return AllTemplates.templates.count }
     }
     static let templatesNotificationId: String = "APITemplatesArrived"
+    static var errorMsg: String?
 
     // Mark: - Methods
 
@@ -24,13 +25,15 @@ class AllTemplates {
             performAsync {
                 if success {
                     AllTemplates.templates = payload!
-                    AllTemplates.notifyOnArrival()
+                } else {
+                    AllTemplates.errorMsg = errorString
                 }
+                AllTemplates.notifyOnArrival()
             }
         }
     }
 
-    class func notifyOnArrival() {
+    static func notifyOnArrival() {
         NotificationCenter.default.post(name: Notification.Name(templatesNotificationId), object: nil)
     }
 }

@@ -69,13 +69,10 @@ class CardsGalleryViewController: UIViewController, UICollectionViewDelegate, UI
                                                selector: #selector(self.listenToTemplatesArrival),
                                                name: NSNotification.Name(AllTemplates.templatesNotificationId),
                                                object: nil)
+        AllTemplates.load()
     }
 
     // Mark: - Actions & Protocols
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
@@ -104,6 +101,12 @@ class CardsGalleryViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func listenToTemplatesArrival() {
+        if let error = AllTemplates.errorMsg {
+            spinner.isHidden = true
+            alertMessage("No Internet", message: error)
+            return
+        }
+
         collectionView.reloadData()
         spin()
 

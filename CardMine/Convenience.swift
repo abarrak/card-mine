@@ -150,7 +150,7 @@ extension CardMineClient {
         let _ = genericApiTaks(apiEndpoint: endpoint, parameters: [:], httpMethod: "GET", jsonBody: nil) { (auth, payload, error) in
             
             if error != nil {
-                callback(false, "Server Erro: \(error!.localizedDescription)", nil)
+                callback(false, "Server Error: \(error!.localizedDescription)", nil)
                 return
             }
             
