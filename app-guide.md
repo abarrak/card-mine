@@ -24,33 +24,54 @@ For more details, check the next section.
 
 
 ### User Flow and Screens 
+
 ![1](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/1.png)
+
 ![2](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/2.png)
+
 ![3](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/3.png)
+
 ![4](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/4.png)
+
 ![5](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/5.png)
+
 ![6](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/6.png)
+
 ![7](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/7.png)
+
 ![8](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/8.png)
+
 ![9](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/9.png)
+
 ![10](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/10.png)
+
 ![11](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/11.png)
+
 ![12](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/12.png)
+
 ![13](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/13.png)
+
 ![14](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/14.png)
+
 ![15](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/15.png)
+
 ![15_5](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/15_5.png)
+
 ![16](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/16.png)
+
 ![17](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/17.png)
+
 ![18](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/18.png)
+
 ![19](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/19.png)
+
 ![20](https://raw.githubusercontent.com/abarrak/card-mine/master/screen-shots/20.png)
 
 
 ### Building the RESTful API 
 There's a recommendation in the project guidelines to look for an interesting REST API and integrate with it.
 
-During my research journey, I found nothing near to what I had in mind as an idea.
+During my research journey, I found nothing near to what I had in mind as an idea. 
 Being experienced in writing web apps and apis maid it a reasonable choice and good practice to build [Card Mine own API](https://github.com/abarrak/card-mine-api). 
 
 It's `TDD`ed API that has complete solutions for authentication, user management, cards resources and templates.
