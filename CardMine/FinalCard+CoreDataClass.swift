@@ -47,7 +47,6 @@ public class FinalCard: NSManagedObject {
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
         do {
             let results = try context.fetch(fetchRequest) as! [FinalCard]
-            print(results)
             return results.first
         } catch {
             return nil
@@ -59,6 +58,16 @@ public class FinalCard: NSManagedObject {
             return fcs.count
         } else {
             fatalError("Can't generate ids")
+        }
+    }
+
+    static func recalculateIds(_ context: NSManagedObjectContext) {
+        let all = FinalCard.all(context)
+        var counter = 0
+        for f in all! {
+            f.id = Int32(counter)
+            counter += 1
+            try? context.save()
         }
     }
 }
