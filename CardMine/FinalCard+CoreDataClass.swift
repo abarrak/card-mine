@@ -63,7 +63,7 @@ public class FinalCard: NSManagedObject {
 
     static func recalculateIds(_ context: NSManagedObjectContext) {
         let all = FinalCard.all(context)
-        var counter = 0
+        var counter = 1
         for f in all! {
             f.id = Int32(counter)
             counter += 1

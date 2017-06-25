@@ -75,7 +75,10 @@ class CardsTableViewController : UITableViewController, NSFetchedResultsControll
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCard = FinalCard.find(indexPath.row, context: context)
+        print(fetchedResultsController?.fetchedObjects?.count)
+        print(fetchedResultsController?.fetchedObjects ?? "D")
+
+        selectedCard = FinalCard.find(indexPath.row + 1, context: context)
         if let _ = selectedCard {
             performSegue(withIdentifier: "presentCardViewer", sender: self)
         }
@@ -88,7 +91,7 @@ class CardsTableViewController : UITableViewController, NSFetchedResultsControll
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
                    forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            if let cardToDelete = FinalCard.find(indexPath.row, context: context) {
+            if let cardToDelete = FinalCard.find(indexPath.row + 1, context: context) {
                 context.delete(cardToDelete)
                 saveInStore()
             }
