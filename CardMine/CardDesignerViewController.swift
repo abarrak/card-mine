@@ -228,7 +228,7 @@ class CardDesignerViewController: UIViewController, UIPopoverPresentationControl
     }
 
     private func generateCardImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(cardImage.frame.size, view.isOpaque, 0.0)
+        UIGraphicsBeginImageContextWithOptions(cardImage.frame.size, view.isHidden, 0.0)
         cardImage.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
